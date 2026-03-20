@@ -36,9 +36,9 @@ namespace Reproductor_de_Musica
         }
 
         //Crear Playlist
-        public void CrearPlaylist(string nombre) 
+        public void CrearPlaylist(string nombre)
         {
-            using SqlConnection conn = new SqlConnection(cadenaConexion))
+            using (SqlConnection conn = new SqlConnection(cadenaConexion))
             {
                 conn.Open();
 
@@ -52,7 +52,7 @@ namespace Reproductor_de_Musica
         }
 
         //Agregar Cancion a una Playlist
-        public void AgregarCancionPlaylist()
+        public void AgregarCancionPlaylist(int idCancion, int idPlaylist)
         {
             using (SqlConnection conn = new SqlConnection(cadenaConexion))
             {
@@ -61,7 +61,7 @@ namespace Reproductor_de_Musica
                 string query = "INSERT INTO PlaylistCancion (idCancion, idPlaylist) VALUES (@cancion, @playlist)";
                 SqlCommand cmd = new SqlCommand(query, conn);
 
-                cmd.Parameters.AddWithValue("@cancion", idCancion);  
+                cmd.Parameters.AddWithValue("@cancion", idCancion);
                 cmd.Parameters.AddWithValue("@playlist", idPlaylist);
 
                 cmd.ExecuteNonQuery();
