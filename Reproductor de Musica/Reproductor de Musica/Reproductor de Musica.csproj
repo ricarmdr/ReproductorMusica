@@ -189,6 +189,7 @@
     </Compile>
     <Compile Include="Historial.cs" />
     <Compile Include="NodoCancion.cs" />
+    <Compile Include="Playlist1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
