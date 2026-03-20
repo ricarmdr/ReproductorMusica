@@ -188,6 +188,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GestorBaseDatos.cs" />
     <Compile Include="Historial.cs" />
     <Compile Include="NodoCancion.cs" />
     <Compile Include="Program.cs" />
