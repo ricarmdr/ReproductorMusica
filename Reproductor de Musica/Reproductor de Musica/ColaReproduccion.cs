@@ -45,23 +45,22 @@ namespace Reproductor_de_Musica
         //eliminar una cancion de la cola
         public Cancion Desencolar()
         {
+            //si la cola esta vacia
             if (EstaVacia())
                 return null;
 
-            else 
-            {
-                NodoCancion aux = frente;
-                Cancion c = aux.Dato;
+            //si la cola no está vacia
+            NodoCancion aux = frente;
+            Cancion c = aux.Dato;
 
-                frente = frente.Siguiente;
+            frente = frente.Siguiente;
 
-                if (frente == null)
-                    final = null;
-                else
-                    frente.Anterior = null;
+            if (frente == null)
+                final = null;
+            else
+                frente.Anterior = null;
 
-                return c;
-            }
+            return c;
         }
     }
 }
