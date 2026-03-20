@@ -68,5 +68,85 @@ namespace Reproductor_de_Musica
             }
         }
 
+        public Playlist1 ObtenerCancion()
+        {
+            Playlist1 lista = new Playlist1("Todas las canciones");
+
+            using (SqlConnection conn = new SqlConnection(cadenaConexion))
+            {
+                conn.Open();
+
+                string query = "SELECT * FROM Cancion";
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Cancion c = new Cancion(
+                        Convert.ToInt32(reader["idCancion"]),
+                        reader["nombre"].ToString(),
+                        reader["artista"].ToString(),
+                        reader["rutaArchivo"].ToString()
+                    );
+
+                    lista.AgregarCancion(c);
+                }
+            }
+
+            return lista;
+        }
+
+        //Clase interna de nodoplaylist para manejar multiples playlists 
+        internal class NodoPlaylist
+        {
+            public Playlist1 Dato;
+            public NodoPlaylist Siguiente;
+
+            public NodoPlaylist(Playlist1 p)
+            {
+                Dato = p;
+                Siguiente = null;
+            }
+        }
+
+        public NodoPlaylist ObtenerPlaylists()
+        {
+            NodoPlaylist inicio = null;
+            NodoPlaylist ultimo = null;
+
+            using (SqlConnection conn = new SqlConnection(cadenaConexion))
+            {
+                conn.Open();
+
+                string query = "SELECT * FROM Playlist";
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Playlist1 p = new Playlist1(
+                        reader["nombrePlaylist"].ToString()
+                    );
+
+                    NodoPlaylist nuevo = new NodoPlaylist(p);
+
+                    if (inicio == null)
+                    {
+                        inicio = nuevo;
+                        ultimo = nuevo;
+                    }
+                    else
+                    {
+                        ultimo.Siguiente = nuevo;
+                        ultimo = nuevo;
+                    }
+                }
+            }
+
+            return inicio;
+        }
+
     }
 }
