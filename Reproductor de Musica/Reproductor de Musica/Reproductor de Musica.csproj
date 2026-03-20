@@ -181,6 +181,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cancion.cs" />
+    <Compile Include="ColaReproduccion.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
