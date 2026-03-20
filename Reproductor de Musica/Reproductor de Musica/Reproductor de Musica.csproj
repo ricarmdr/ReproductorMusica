@@ -181,12 +181,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cancion.cs" />
+    <Compile Include="ColaReproduccion.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GestorBaseDatos.cs" />
     <Compile Include="Historial.cs" />
     <Compile Include="NodoCancion.cs" />
     <Compile Include="Program.cs" />
