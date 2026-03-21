@@ -55,13 +55,21 @@ namespace Reproductor_de_Musica
                     else if (actual == final)
                     {
                         final = actual.Anterior;
-                        final.Siguiente = null;
+
+                        if (final != null)
+                        {
+                            final.Siguiente = null;
+                        }
                     }
                     //Y si esta en el medio se ejecuta este, Esta la tengo que modificar todavia
                     else
                     {
                         actual.Anterior.Siguiente = actual.Siguiente;
-                        actual.Siguiente.Anterior = actual.Anterior;
+
+                        if (actual.Siguiente != null)
+                        {
+                            actual.Siguiente.Anterior = actual.Anterior;
+                        }
                     }
 
                     return;
