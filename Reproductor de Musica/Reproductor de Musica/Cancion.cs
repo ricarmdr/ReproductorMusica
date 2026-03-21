@@ -8,7 +8,7 @@ using Microsoft.SqlServer.Server;
 
 namespace Reproductor_de_Musica
 {
-    internal class Cancion
+    public class Cancion
     {
         public int Id { get; set; } //Id para el servidor de SQL
         public string Nombre { get; set; }

@@ -18,20 +18,25 @@ namespace Reproductor_de_Musica
         }
 
         //metodo para guardar una cancion
-        public void GuardarCancion(Cancion c)
+        public int GuardarCancion(Cancion c)
         {
             using (SqlConnection conn = new SqlConnection(cadenaConexion))
             {
                 conn.Open();
 
-                string query = "INSERT INTO Cancion (nombre, artista, rutaArchivo) VALUES (@nombre, @artista, @ruta)";
+                string query = @"
+        INSERT INTO Cancion (nombre, artista, rutaArchivo)
+        OUTPUT INSERTED.idCancion
+        VALUES (@nombre, @artista, @ruta)";
+
                 SqlCommand cmd = new SqlCommand(query, conn);
 
                 cmd.Parameters.AddWithValue("@nombre", c.Nombre);
                 cmd.Parameters.AddWithValue("@artista", c.Artista);
                 cmd.Parameters.AddWithValue("@ruta", c.RutaArchivo);
 
-                cmd.ExecuteNonQuery();
+                int id = (int)cmd.ExecuteScalar();
+                return id;
             }
         }
 
@@ -70,7 +75,7 @@ namespace Reproductor_de_Musica
 
         public Playlist1 ObtenerCancion()
         {
-            Playlist1 lista = new Playlist1("Todas las canciones");
+            Playlist1 lista = new Playlist1("Biblioteca");
 
             using (SqlConnection conn = new SqlConnection(cadenaConexion))
             {
@@ -92,13 +97,15 @@ namespace Reproductor_de_Musica
 
                     lista.AgregarCancion(c);
                 }
+
+                reader.Close();
             }
 
             return lista;
         }
 
         //Clase interna de nodoplaylist para manejar multiples playlists 
-        internal class NodoPlaylist
+        public class NodoPlaylist
         {
             public Playlist1 Dato;
             public NodoPlaylist Siguiente;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Reproductor_de_Musica
 {
-    internal class NodoCancion
+    public class NodoCancion
     {
         public Cancion Dato { get; set; }
         public NodoCancion Siguiente { get; set; }

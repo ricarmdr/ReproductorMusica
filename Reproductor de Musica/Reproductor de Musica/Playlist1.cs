@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Reproductor_de_Musica
 {
-    internal class Playlist1
+    public class Playlist1
     {
         public string nombre;
         public NodoCancion inicio;
@@ -80,6 +80,20 @@ namespace Reproductor_de_Musica
                 Console.WriteLine("ID: " + actual.Dato.Id + " Nombre: " + actual.Dato.Nombre + " Artista: " + actual.Dato.Artista);
                 actual = actual.Siguiente;
             }
+        }
+
+        public List<Cancion> ObtenerLista()
+        {
+            List<Cancion> lista = new List<Cancion>();
+            NodoCancion actual = inicio;
+
+            while (actual != null)
+            {
+                lista.Add(actual.Dato);
+                actual = actual.Siguiente;
+            }
+
+            return lista;
         }
     }
 }
