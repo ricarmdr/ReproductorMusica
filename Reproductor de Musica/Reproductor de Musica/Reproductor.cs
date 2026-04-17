@@ -20,7 +20,13 @@ namespace Reproductor_de_Musica
         private WaveOutEvent output;
         private AudioFileReader audio;
 
-      
+        //Expone la cancionn actual
+        public Cancion CancionActual => actual?.Dato;
+
+        //Estado de reproduccion
+        public PlaybackState EstadoReproduccion => output?.PlaybackState ?? PlaybackState.Stopped;
+
+
         public Reproductor(Playlist1 playlist)
         {
             this.playlist = playlist;
@@ -34,6 +40,13 @@ namespace Reproductor_de_Musica
         {
             try
             {
+                
+                if (actual != null && actual.Dato.Id == c.Id && output != null)
+                {
+                    PausarCancion();
+                    return;
+                }
+
                 cambioManual = true;
 
                 if (output != null)
@@ -51,33 +64,22 @@ namespace Reproductor_de_Musica
                 }
 
                 string rutaCompleta = Path.Combine(Application.StartupPath, c.RutaArchivo);
-
                 if (!File.Exists(rutaCompleta))
                 {
                     MessageBox.Show("Archivo no encontrado: " + rutaCompleta);
+                    cambioManual = false;
                     return;
                 }
-
 
                 audio = new AudioFileReader(rutaCompleta);
                 output = new WaveOutEvent();
                 output.Init(audio);
-
-
                 output.PlaybackStopped += Output_PlaybackStopped;
-
-
                 output.Play();
 
-
                 actual = BuscarNodo(c.Id);
-
-
                 historial.Push(c);
-
-
                 OnCancionCambiada?.Invoke(c.Id);
-
                 cambioManual = false;
             }
             catch (Exception ex)
