@@ -29,15 +29,14 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnSiguiente = new System.Windows.Forms.Button();
+            this.btnAnterior = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnHistorial = new System.Windows.Forms.Button();
             this.btnAgregar = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.dvgCanciones = new System.Windows.Forms.DataGridView();
-            this.btnAnterior = new System.Windows.Forms.Button();
-            this.btnPausar = new System.Windows.Forms.Button();
-            this.btnReproducir = new System.Windows.Forms.Button();
-            this.btnSiguiente = new System.Windows.Forms.Button();
+            this.btnPlayPause = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -46,9 +45,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnPlayPause);
             this.groupBox1.Controls.Add(this.btnSiguiente);
-            this.groupBox1.Controls.Add(this.btnReproducir);
-            this.groupBox1.Controls.Add(this.btnPausar);
             this.groupBox1.Controls.Add(this.btnAnterior);
             this.groupBox1.Location = new System.Drawing.Point(5, 344);
             this.groupBox1.Name = "groupBox1";
@@ -56,6 +54,26 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Reproductor ";
+            // 
+            // btnSiguiente
+            // 
+            this.btnSiguiente.Location = new System.Drawing.Point(556, 34);
+            this.btnSiguiente.Name = "btnSiguiente";
+            this.btnSiguiente.Size = new System.Drawing.Size(131, 44);
+            this.btnSiguiente.TabIndex = 3;
+            this.btnSiguiente.Text = "Siguiente";
+            this.btnSiguiente.UseVisualStyleBackColor = true;
+            this.btnSiguiente.Click += new System.EventHandler(this.btnSiguiente_Click);
+            // 
+            // btnAnterior
+            // 
+            this.btnAnterior.Location = new System.Drawing.Point(34, 34);
+            this.btnAnterior.Name = "btnAnterior";
+            this.btnAnterior.Size = new System.Drawing.Size(131, 44);
+            this.btnAnterior.TabIndex = 0;
+            this.btnAnterior.Text = "Anterior";
+            this.btnAnterior.UseVisualStyleBackColor = true;
+            this.btnAnterior.Click += new System.EventHandler(this.btnAnterior_Click);
             // 
             // groupBox2
             // 
@@ -109,45 +127,15 @@
             this.dvgCanciones.TabIndex = 0;
             this.dvgCanciones.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dvgCanciones_CellContentClick);
             // 
-            // btnAnterior
+            // btnPlayPause
             // 
-            this.btnAnterior.Location = new System.Drawing.Point(34, 34);
-            this.btnAnterior.Name = "btnAnterior";
-            this.btnAnterior.Size = new System.Drawing.Size(131, 44);
-            this.btnAnterior.TabIndex = 0;
-            this.btnAnterior.Text = "Anterior";
-            this.btnAnterior.UseVisualStyleBackColor = true;
-            this.btnAnterior.Click += new System.EventHandler(this.btnAnterior_Click);
-            // 
-            // btnPausar
-            // 
-            this.btnPausar.Location = new System.Drawing.Point(202, 34);
-            this.btnPausar.Name = "btnPausar";
-            this.btnPausar.Size = new System.Drawing.Size(131, 44);
-            this.btnPausar.TabIndex = 1;
-            this.btnPausar.Text = "Pausa";
-            this.btnPausar.UseVisualStyleBackColor = true;
-            this.btnPausar.Click += new System.EventHandler(this.btnPausar_Click);
-            // 
-            // btnReproducir
-            // 
-            this.btnReproducir.Location = new System.Drawing.Point(382, 34);
-            this.btnReproducir.Name = "btnReproducir";
-            this.btnReproducir.Size = new System.Drawing.Size(131, 44);
-            this.btnReproducir.TabIndex = 2;
-            this.btnReproducir.Text = "Reproducir";
-            this.btnReproducir.UseVisualStyleBackColor = true;
-            this.btnReproducir.Click += new System.EventHandler(this.btnReproducir_Click);
-            // 
-            // btnSiguiente
-            // 
-            this.btnSiguiente.Location = new System.Drawing.Point(556, 34);
-            this.btnSiguiente.Name = "btnSiguiente";
-            this.btnSiguiente.Size = new System.Drawing.Size(131, 44);
-            this.btnSiguiente.TabIndex = 3;
-            this.btnSiguiente.Text = "Siguiente";
-            this.btnSiguiente.UseVisualStyleBackColor = true;
-            this.btnSiguiente.Click += new System.EventHandler(this.btnSiguiente_Click);
+            this.btnPlayPause.Location = new System.Drawing.Point(189, 32);
+            this.btnPlayPause.Name = "btnPlayPause";
+            this.btnPlayPause.Size = new System.Drawing.Size(344, 46);
+            this.btnPlayPause.TabIndex = 2;
+            this.btnPlayPause.Text = "▶ Reproducir";
+            this.btnPlayPause.UseVisualStyleBackColor = true;
+            this.btnPlayPause.Click += new System.EventHandler(this.btnPlayPause_Click);
             // 
             // Form1
             // 
@@ -178,8 +166,7 @@
         private System.Windows.Forms.DataGridView dvgCanciones;
         private System.Windows.Forms.Button btnAnterior;
         private System.Windows.Forms.Button btnSiguiente;
-        private System.Windows.Forms.Button btnReproducir;
-        private System.Windows.Forms.Button btnPausar;
+        private System.Windows.Forms.Button btnPlayPause;
     }
 }
 

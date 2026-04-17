@@ -183,5 +183,41 @@ namespace Reproductor_de_Musica
             string historialTexto = reproductor.ObtenerHistorialTexto();
             MessageBox.Show(historialTexto);
         }
+
+        private void btnPlayPause_Click(object sender, EventArgs e)
+        {
+            // Verifica que haya una cancinn seleccionada
+            if (dvgCanciones.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Selecciona una canción primero.");
+                return;
+            }
+
+            // Obtiene la cancion seleccionada 
+            int id = Convert.ToInt32(dvgCanciones.SelectedRows[0].Cells["Id"].Value);
+            string nombre = dvgCanciones.SelectedRows[0].Cells["Nombre"].Value.ToString();
+            string artista = dvgCanciones.SelectedRows[0].Cells["Artista"].Value.ToString();
+            string ruta = dvgCanciones.SelectedRows[0].Cells["RutaArchivo"].Value.ToString();
+
+            Cancion seleccionada = new Cancion(id, nombre, artista, ruta);
+
+            
+            reproductor.ReproducirCancion(seleccionada);
+
+            // Actualizar el boton segun el estado resultante
+            ActualizarBotonPlayPause();
+        }
+
+        private void ActualizarBotonPlayPause()
+        {
+            if (reproductor.EstadoReproduccion == PlaybackState.Playing)
+                btnPlayPause.Text = "⏸ Pausar";
+            else
+                btnPlayPause.Text = "▶ Reproducir";
+        }
+
+
+
     }
-}
+    }
+
