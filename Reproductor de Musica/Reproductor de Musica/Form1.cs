@@ -28,39 +28,36 @@ namespace Reproductor_de_Musica
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            biblioteca = ConexionGlobal.Instancia.ObtenerCancion();
-            CargarDataGrid();
-            dvgCanciones.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dvgCanciones.MultiSelect = false;
-            dvgCanciones.ReadOnly = true;
-
-            dvgCanciones.Columns["RutaArchivo"].Visible = false;
-            dvgCanciones.Columns["Id"].Visible = false;
-
+            biblioteca = ConexionGlobal.Instancia.ObtenerCancion(); 
+            ConfigurarColumnasDGV();
+            CargarDataGrid(); 
             reproductor = new Reproductor(biblioteca);
-
             reproductor.OnCancionCambiada += SeleccionarEnGrid;
 
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "Archivos de audio|*.mp3;*.wav";
-
-            if(ofd.ShowDialog() == DialogResult.OK)
+            using (AgregarCancion formAgregar = new AgregarCancion())
             {
-                string ruta = ofd.FileName;
-
-                AgregarCancion(ruta);
+                if (formAgregar.ShowDialog() == DialogResult.OK)
+                {
+                    // Llamar a tu método ya corregido
+                    AgregarCancion1(
+                        formAgregar.NombreCancion,
+                        formAgregar.ArtistaCancion,
+                        formAgregar.RutaCancion,
+                        formAgregar.DuracionCancion
+                    );
+                }
             }
         }
 
-        public void AgregarCancion(string rutaArchivo)
+        public void AgregarCancion1(string nombre, string artistas, string rutaArchivo, TimeSpan duracion)
         {
             try
             {
-                
+
                 if (!File.Exists(rutaArchivo))
                 {
                     MessageBox.Show("El archivo no existe");
@@ -94,12 +91,9 @@ namespace Reproductor_de_Musica
                     return;
                 }
 
-                string nombre = Path.GetFileNameWithoutExtension(rutaArchivo);
 
-                //Temporal
-                string artista = "Desconocido";
 
-                Cancion nueva = new Cancion(0, nombre, artista, rutaRelativa);
+                Cancion nueva = new Cancion(0, nombre, artistas, rutaRelativa, duracion);
 
                 int id = ConexionGlobal.Instancia.GuardarCancion(nueva);
                 nueva.Id = id;
@@ -123,31 +117,49 @@ namespace Reproductor_de_Musica
 
         public void CargarDataGrid()
         {
-            dvgCanciones.DataSource = null;
-            dvgCanciones.DataSource = biblioteca.ObtenerLista();
+            DataTable tabla = new DataTable();
+            tabla.Columns.Add("Id", typeof(int));
+            tabla.Columns.Add("Nombre", typeof(string));
+            tabla.Columns.Add("Artista", typeof(string));
+            tabla.Columns.Add("RutaArchivo", typeof(string));
+            tabla.Columns.Add("Duracion", typeof(string));
 
+            // Usa biblioteca directamente, no vuelvas a consultar la BD
+            NodoCancion temp = biblioteca.inicio;
+            while (temp != null)
+            {
+                // Formato correcto para TimeSpan
+                string duracionTexto = string.Format("{0}:{1:D2}",
+                    (int)temp.Dato.Duracion.TotalMinutes,
+                    temp.Dato.Duracion.Seconds);
+
+                tabla.Rows.Add(
+                    temp.Dato.Id,
+                    temp.Dato.Nombre,
+                    temp.Dato.Artista,
+                    temp.Dato.RutaArchivo,
+                    duracionTexto
+                );
+                temp = temp.Siguiente;
+            }
+
+            dvgCanciones.DataSource = tabla;
         }
 
         public void SeleccionarEnGrid(int idCancion)
         {
+            if (dvgCanciones.InvokeRequired)
+            {
+                dvgCanciones.Invoke((Action)(() => SeleccionarEnGrid(idCancion)));
+                return;
+            }
+
             foreach (DataGridViewRow row in dvgCanciones.Rows)
             {
-                Cancion c = (Cancion)row.DataBoundItem;
-
-                if (c.Id == idCancion)
+                if (row.Cells["Id"].Value != null && Convert.ToInt32(row.Cells["Id"].Value) == idCancion)
                 {
+                    dvgCanciones.ClearSelection();
                     row.Selected = true;
-
-                  
-                    foreach (DataGridViewCell cell in row.Cells)
-                    {
-                        if (cell.Visible)
-                        {
-                            dvgCanciones.CurrentCell = cell;
-                            break;
-                        }
-                    }
-
                     dvgCanciones.FirstDisplayedScrollingRowIndex = row.Index;
                     break;
                 }
@@ -156,11 +168,10 @@ namespace Reproductor_de_Musica
 
         private void btnReproducir_Click(object sender, EventArgs e)
         {
-            if (dvgCanciones.CurrentRow != null)
-            {
-                Cancion c = (Cancion)dvgCanciones.CurrentRow.DataBoundItem;
-                reproductor.ReproducirCancion(c);
-            }
+            Cancion c = ObtenerCancionSeleccionada();
+            if (c == null) { MessageBox.Show("Selecciona una canción."); return; }
+            reproductor.ReproducirCancion(c);
+            ActualizarBotonPlayPause();
         }
 
         private void btnPausar_Click(object sender, EventArgs e)
@@ -199,7 +210,11 @@ namespace Reproductor_de_Musica
             string artista = dvgCanciones.SelectedRows[0].Cells["Artista"].Value.ToString();
             string ruta = dvgCanciones.SelectedRows[0].Cells["RutaArchivo"].Value.ToString();
 
-            Cancion seleccionada = new Cancion(id, nombre, artista, ruta);
+            TimeSpan duracion = TimeSpan.Zero;
+            if (dvgCanciones.SelectedRows[0].Cells["Duracion"].Value != null)
+                TimeSpan.TryParse(dvgCanciones.SelectedRows[0].Cells["Duracion"].Value.ToString(), out duracion);
+
+            Cancion seleccionada = new Cancion(id, nombre, artista, ruta, duracion);
 
             
             reproductor.ReproducirCancion(seleccionada);
@@ -214,6 +229,38 @@ namespace Reproductor_de_Musica
                 btnPlayPause.Text = "⏸ Pausar";
             else
                 btnPlayPause.Text = "▶ Reproducir";
+        }
+
+        private void ConfigurarColumnasDGV()
+        {
+            dvgCanciones.AutoGenerateColumns = false;
+            dvgCanciones.AllowUserToAddRows = false; 
+            dvgCanciones.Columns.Clear();
+
+            dvgCanciones.Columns.Add(new DataGridViewTextBoxColumn { Name = "Id", DataPropertyName = "Id", Visible = false });
+            dvgCanciones.Columns.Add(new DataGridViewTextBoxColumn { Name = "Nombre", DataPropertyName = "Nombre", HeaderText = "Canción", Width = 200 });
+            dvgCanciones.Columns.Add(new DataGridViewTextBoxColumn { Name = "Artista", DataPropertyName = "Artista", HeaderText = "Artista", Width = 150 });
+            dvgCanciones.Columns.Add(new DataGridViewTextBoxColumn { Name = "RutaArchivo", DataPropertyName = "RutaArchivo", Visible = false });
+            dvgCanciones.Columns.Add(new DataGridViewTextBoxColumn { Name = "Duracion", DataPropertyName = "Duracion", HeaderText = "Duración", Width = 80 });
+        }
+
+        private Cancion ObtenerCancionSeleccionada()
+        {
+            if (dvgCanciones.CurrentRow == null) return null;
+
+            DataRowView fila = (DataRowView)dvgCanciones.CurrentRow.DataBoundItem;
+            if (fila == null) return null;
+
+            TimeSpan duracion = TimeSpan.Zero;
+            TimeSpan.TryParse("00:" + fila["Duracion"].ToString(), out duracion);
+
+            return new Cancion(
+                Convert.ToInt32(fila["Id"]),
+                fila["Nombre"].ToString(),
+                fila["Artista"].ToString(),
+                fila["RutaArchivo"].ToString(),
+                duracion
+            );
         }
 
 

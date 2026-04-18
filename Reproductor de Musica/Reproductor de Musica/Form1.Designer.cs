@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnPlayPause = new System.Windows.Forms.Button();
             this.btnSiguiente = new System.Windows.Forms.Button();
             this.btnAnterior = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -36,7 +37,6 @@
             this.btnAgregar = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.dvgCanciones = new System.Windows.Forms.DataGridView();
-            this.btnPlayPause = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -48,16 +48,26 @@
             this.groupBox1.Controls.Add(this.btnPlayPause);
             this.groupBox1.Controls.Add(this.btnSiguiente);
             this.groupBox1.Controls.Add(this.btnAnterior);
-            this.groupBox1.Location = new System.Drawing.Point(5, 344);
+            this.groupBox1.Location = new System.Drawing.Point(6, 543);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(708, 94);
+            this.groupBox1.Size = new System.Drawing.Size(1002, 115);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Reproductor ";
             // 
+            // btnPlayPause
+            // 
+            this.btnPlayPause.Location = new System.Drawing.Point(419, 65);
+            this.btnPlayPause.Name = "btnPlayPause";
+            this.btnPlayPause.Size = new System.Drawing.Size(213, 46);
+            this.btnPlayPause.TabIndex = 2;
+            this.btnPlayPause.Text = "▶ Reproducir";
+            this.btnPlayPause.UseVisualStyleBackColor = true;
+            this.btnPlayPause.Click += new System.EventHandler(this.btnPlayPause_Click);
+            // 
             // btnSiguiente
             // 
-            this.btnSiguiente.Location = new System.Drawing.Point(556, 34);
+            this.btnSiguiente.Location = new System.Drawing.Point(663, 66);
             this.btnSiguiente.Name = "btnSiguiente";
             this.btnSiguiente.Size = new System.Drawing.Size(131, 44);
             this.btnSiguiente.TabIndex = 3;
@@ -67,7 +77,7 @@
             // 
             // btnAnterior
             // 
-            this.btnAnterior.Location = new System.Drawing.Point(34, 34);
+            this.btnAnterior.Location = new System.Drawing.Point(261, 65);
             this.btnAnterior.Name = "btnAnterior";
             this.btnAnterior.Size = new System.Drawing.Size(131, 44);
             this.btnAnterior.TabIndex = 0;
@@ -88,7 +98,7 @@
             // 
             // btnHistorial
             // 
-            this.btnHistorial.Location = new System.Drawing.Point(6, 85);
+            this.btnHistorial.Location = new System.Drawing.Point(6, 278);
             this.btnHistorial.Name = "btnHistorial";
             this.btnHistorial.Size = new System.Drawing.Size(142, 44);
             this.btnHistorial.TabIndex = 1;
@@ -102,19 +112,19 @@
             this.btnAgregar.Name = "btnAgregar";
             this.btnAgregar.Size = new System.Drawing.Size(142, 44);
             this.btnAgregar.TabIndex = 0;
-            this.btnAgregar.Text = "Agregar";
+            this.btnAgregar.Text = "Agregar Cancion";
             this.btnAgregar.UseVisualStyleBackColor = true;
             this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.dvgCanciones);
-            this.groupBox3.Location = new System.Drawing.Point(166, 12);
+            this.groupBox3.Location = new System.Drawing.Point(547, 12);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(541, 338);
+            this.groupBox3.Size = new System.Drawing.Size(461, 525);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Biblioteca musical";
+            this.groupBox3.Text = "Playlist Actual";
             // 
             // dvgCanciones
             // 
@@ -123,26 +133,16 @@
             this.dvgCanciones.Name = "dvgCanciones";
             this.dvgCanciones.RowHeadersWidth = 51;
             this.dvgCanciones.RowTemplate.Height = 24;
-            this.dvgCanciones.Size = new System.Drawing.Size(511, 296);
+            this.dvgCanciones.Size = new System.Drawing.Size(430, 485);
             this.dvgCanciones.TabIndex = 0;
             this.dvgCanciones.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dvgCanciones_CellContentClick);
-            // 
-            // btnPlayPause
-            // 
-            this.btnPlayPause.Location = new System.Drawing.Point(189, 32);
-            this.btnPlayPause.Name = "btnPlayPause";
-            this.btnPlayPause.Size = new System.Drawing.Size(344, 46);
-            this.btnPlayPause.TabIndex = 2;
-            this.btnPlayPause.Text = "▶ Reproducir";
-            this.btnPlayPause.UseVisualStyleBackColor = true;
-            this.btnPlayPause.Click += new System.EventHandler(this.btnPlayPause_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.ClientSize = new System.Drawing.Size(725, 450);
+            this.ClientSize = new System.Drawing.Size(1020, 670);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);

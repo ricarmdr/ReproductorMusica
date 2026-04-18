@@ -17,12 +17,13 @@ namespace Reproductor_de_Musica
         public TimeSpan Duracion { get; set; }
 
 
-        public Cancion(int id, string nombre, string artista, string rutaarchivo)
+        public Cancion(int id, string nombre, string artista, string rutaarchivo, TimeSpan duracion)
         {
             Id = id;
             Nombre = nombre;
             Artista = artista;
             RutaArchivo = rutaarchivo;
+            Duracion = duracion;
 
         }
     }  
