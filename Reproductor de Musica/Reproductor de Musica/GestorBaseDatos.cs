@@ -23,18 +23,15 @@ namespace Reproductor_de_Musica
             using (SqlConnection conn = new SqlConnection(cadenaConexion))
             {
                 conn.Open();
-
                 string query = @"
-        INSERT INTO Cancion (nombre, artista, rutaArchivo)
-        OUTPUT INSERTED.idCancion
-        VALUES (@nombre, @artista, @ruta)";
-
+                INSERT INTO Cancion (nombre, artista, rutaArchivo, duracion)
+                OUTPUT INSERTED.idCancion
+                VALUES (@nombre, @artista, @ruta, @duracion)";
                 SqlCommand cmd = new SqlCommand(query, conn);
-
                 cmd.Parameters.AddWithValue("@nombre", c.Nombre);
                 cmd.Parameters.AddWithValue("@artista", c.Artista);
                 cmd.Parameters.AddWithValue("@ruta", c.RutaArchivo);
-
+                cmd.Parameters.AddWithValue("@duracion", c.Duracion.ToString(@"mm\:ss"));
                 int id = (int)cmd.ExecuteScalar();
                 return id;
             }
@@ -76,31 +73,32 @@ namespace Reproductor_de_Musica
         public Playlist1 ObtenerCancion()
         {
             Playlist1 lista = new Playlist1("Biblioteca");
-
             using (SqlConnection conn = new SqlConnection(cadenaConexion))
             {
                 conn.Open();
-
                 string query = "SELECT * FROM Cancion";
                 SqlCommand cmd = new SqlCommand(query, conn);
-
                 SqlDataReader reader = cmd.ExecuteReader();
-
                 while (reader.Read())
                 {
+                    TimeSpan duracion = TimeSpan.Zero;
+                    if (reader["duracion"] != DBNull.Value)
+                    {
+                        string valor = reader["duracion"].ToString(); 
+                        TimeSpan.TryParse("00:" + valor, out duracion); 
+                    }
+
                     Cancion c = new Cancion(
                         Convert.ToInt32(reader["idCancion"]),
                         reader["nombre"].ToString(),
                         reader["artista"].ToString(),
-                        reader["rutaArchivo"].ToString()
+                        reader["rutaArchivo"].ToString(),
+                        duracion
                     );
-
                     lista.AgregarCancion(c);
                 }
-
                 reader.Close();
             }
-
             return lista;
         }
 

@@ -180,6 +180,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AgregarCancion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AgregarCancion.Designer.cs">
+      <DependentUpon>AgregarCancion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cancion.cs" />
     <Compile Include="ColaReproduccion.cs" />
     <Compile Include="ConexionGlobal.cs" />
@@ -196,6 +202,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reproductor.cs" />
+    <EmbeddedResource Include="AgregarCancion.resx">
+      <DependentUpon>AgregarCancion.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
