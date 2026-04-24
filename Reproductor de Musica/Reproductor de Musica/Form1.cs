@@ -19,6 +19,7 @@ namespace Reproductor_de_Musica
         Playlist1 biblioteca = new Playlist1("Biblioteca");
         Reproductor reproductor;
         NodoCancion actual;
+        private bool _scrubbing = false;
         public Form1()
         {
             InitializeComponent();
@@ -28,11 +29,29 @@ namespace Reproductor_de_Musica
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            //Biblioteca general
             biblioteca = ConexionGlobal.Instancia.ObtenerCancion(); 
+            //Configurar y cargar dgv con las cnaciones
             ConfigurarColumnasDGV();
             CargarDataGrid(); 
+
+            //Inicializacion del reproductor
             reproductor = new Reproductor(biblioteca);
             reproductor.OnCancionCambiada += SeleccionarEnGrid;
+
+            //Configuracion del timer y barra de reproduccion
+            timerProgreso.Interval = 500;
+            timerProgreso.Tick += timerProgreso_Tick;
+            timerProgreso.Start();
+
+            trackBarProgreso.Minimum = 0;
+            trackBarProgreso.Maximum = 1000;
+            trackBarProgreso.MouseDown += (s, ev) => _scrubbing = true;
+            trackBarProgreso.MouseUp += (s, ev) => {
+                _scrubbing = false;
+                double ratio = trackBarProgreso.Value / 1000.0;
+                reproductor.DetPosicion(TimeSpan.FromSeconds(ratio * reproductor.Duracion.TotalSeconds));
+            };
 
         }
 
@@ -263,8 +282,22 @@ namespace Reproductor_de_Musica
             );
         }
 
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
 
+        }
 
+        private void timerProgreso_Tick(object sender, EventArgs e)
+        {
+            if (_scrubbing || reproductor == null) return;
+            var dur = reproductor.Duracion;
+            var pos = reproductor.Posicion;
+            if (dur.TotalSeconds > 0)
+                trackBarProgreso.Value = (int)(pos.TotalSeconds / dur.TotalSeconds * 1000);
+            lblTiempoActual.Text = pos.ToString(@"m\:ss");
+            lblDuracion.Text = dur.ToString(@"m\:ss");
+
+        }
     }
     }
 
