@@ -20,6 +20,12 @@ namespace Reproductor_de_Musica
         private WaveOutEvent output;
         private AudioFileReader audio;
 
+        //Expone la posicion actual de la cancion (tiempo en el que esta)
+        public TimeSpan Posicion => audio != null ? audio.CurrentTime : TimeSpan.Zero;
+
+        //Expone el timepo total de la cancion actual
+        public TimeSpan Duracion => audio != null ? audio.TotalTime : TimeSpan.Zero;
+
         //Expone la cancionn actual
         public Cancion CancionActual => actual?.Dato;
 
@@ -182,6 +188,12 @@ namespace Reproductor_de_Musica
 
 
             SiguienteCancion();
+        }
+
+        public void DetPosicion(TimeSpan tiempo)
+        {
+            if (audio != null && tiempo <= audio.TotalTime)
+                audio.CurrentTime = tiempo;
         }
 
         public event Action<int> OnCancionCambiada;

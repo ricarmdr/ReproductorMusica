@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnPlayPause = new System.Windows.Forms.Button();
             this.btnSiguiente = new System.Windows.Forms.Button();
@@ -37,27 +38,35 @@
             this.btnAgregar = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.dvgCanciones = new System.Windows.Forms.DataGridView();
+            this.timerProgreso = new System.Windows.Forms.Timer(this.components);
+            this.trackBarProgreso = new System.Windows.Forms.TrackBar();
+            this.lblTiempoActual = new System.Windows.Forms.Label();
+            this.lblDuracion = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dvgCanciones)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarProgreso)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnHistorial);
+            this.groupBox1.Controls.Add(this.lblDuracion);
+            this.groupBox1.Controls.Add(this.lblTiempoActual);
+            this.groupBox1.Controls.Add(this.trackBarProgreso);
             this.groupBox1.Controls.Add(this.btnPlayPause);
-            this.groupBox1.Controls.Add(this.btnSiguiente);
             this.groupBox1.Controls.Add(this.btnAnterior);
             this.groupBox1.Location = new System.Drawing.Point(6, 543);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1002, 115);
+            this.groupBox1.Size = new System.Drawing.Size(1002, 152);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Reproductor ";
             // 
             // btnPlayPause
             // 
-            this.btnPlayPause.Location = new System.Drawing.Point(419, 65);
+            this.btnPlayPause.Location = new System.Drawing.Point(391, 100);
             this.btnPlayPause.Name = "btnPlayPause";
             this.btnPlayPause.Size = new System.Drawing.Size(213, 46);
             this.btnPlayPause.TabIndex = 2;
@@ -67,7 +76,7 @@
             // 
             // btnSiguiente
             // 
-            this.btnSiguiente.Location = new System.Drawing.Point(663, 66);
+            this.btnSiguiente.Location = new System.Drawing.Point(675, 651);
             this.btnSiguiente.Name = "btnSiguiente";
             this.btnSiguiente.Size = new System.Drawing.Size(131, 44);
             this.btnSiguiente.TabIndex = 3;
@@ -77,7 +86,7 @@
             // 
             // btnAnterior
             // 
-            this.btnAnterior.Location = new System.Drawing.Point(261, 65);
+            this.btnAnterior.Location = new System.Drawing.Point(206, 102);
             this.btnAnterior.Name = "btnAnterior";
             this.btnAnterior.Size = new System.Drawing.Size(131, 44);
             this.btnAnterior.TabIndex = 0;
@@ -87,7 +96,6 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.btnHistorial);
             this.groupBox2.Controls.Add(this.btnAgregar);
             this.groupBox2.Location = new System.Drawing.Point(6, 6);
             this.groupBox2.Name = "groupBox2";
@@ -98,7 +106,7 @@
             // 
             // btnHistorial
             // 
-            this.btnHistorial.Location = new System.Drawing.Point(6, 278);
+            this.btnHistorial.Location = new System.Drawing.Point(12, 100);
             this.btnHistorial.Name = "btnHistorial";
             this.btnHistorial.Size = new System.Drawing.Size(142, 44);
             this.btnHistorial.TabIndex = 1;
@@ -137,21 +145,54 @@
             this.dvgCanciones.TabIndex = 0;
             this.dvgCanciones.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dvgCanciones_CellContentClick);
             // 
+            // timerProgreso
+            // 
+            this.timerProgreso.Tick += new System.EventHandler(this.timerProgreso_Tick);
+            // 
+            // trackBarProgreso
+            // 
+            this.trackBarProgreso.Location = new System.Drawing.Point(188, 38);
+            this.trackBarProgreso.Name = "trackBarProgreso";
+            this.trackBarProgreso.Size = new System.Drawing.Size(650, 56);
+            this.trackBarProgreso.TabIndex = 4;
+            this.trackBarProgreso.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            // 
+            // lblTiempoActual
+            // 
+            this.lblTiempoActual.AutoSize = true;
+            this.lblTiempoActual.Location = new System.Drawing.Point(110, 38);
+            this.lblTiempoActual.Name = "lblTiempoActual";
+            this.lblTiempoActual.Size = new System.Drawing.Size(44, 16);
+            this.lblTiempoActual.TabIndex = 5;
+            this.lblTiempoActual.Text = "label1";
+            // 
+            // lblDuracion
+            // 
+            this.lblDuracion.AutoSize = true;
+            this.lblDuracion.Location = new System.Drawing.Point(864, 38);
+            this.lblDuracion.Name = "lblDuracion";
+            this.lblDuracion.Size = new System.Drawing.Size(44, 16);
+            this.lblDuracion.TabIndex = 6;
+            this.lblDuracion.Text = "label2";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.ClientSize = new System.Drawing.Size(1020, 670);
+            this.ClientSize = new System.Drawing.Size(1020, 707);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.btnSiguiente);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
             this.Text = "Reproductor de Musica";
             this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dvgCanciones)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarProgreso)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -167,6 +208,10 @@
         private System.Windows.Forms.Button btnAnterior;
         private System.Windows.Forms.Button btnSiguiente;
         private System.Windows.Forms.Button btnPlayPause;
+        private System.Windows.Forms.TrackBar trackBarProgreso;
+        private System.Windows.Forms.Timer timerProgreso;
+        private System.Windows.Forms.Label lblDuracion;
+        private System.Windows.Forms.Label lblTiempoActual;
     }
 }
 
