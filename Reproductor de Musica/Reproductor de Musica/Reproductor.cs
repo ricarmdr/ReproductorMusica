@@ -32,7 +32,10 @@ namespace Reproductor_de_Musica
         //Estado de reproduccion
         public PlaybackState EstadoReproduccion => output?.PlaybackState ?? PlaybackState.Stopped;
 
+        // Volumen del audio (de 0 a 100)
+        private float _volumenActual = 1.0f;
 
+        // Metodo Constructor
         public Reproductor(Playlist1 playlist)
         {
             this.playlist = playlist;
@@ -41,7 +44,7 @@ namespace Reproductor_de_Musica
             this.actual = null;
         }
 
-
+        //Metdo para reproducir una cancion
         public void ReproducirCancion(Cancion c)
         {
             try
@@ -81,6 +84,7 @@ namespace Reproductor_de_Musica
                 output = new WaveOutEvent();
                 output.Init(audio);
                 output.PlaybackStopped += Output_PlaybackStopped;
+                audio.Volume = _volumenActual;
                 output.Play();
 
                 actual = BuscarNodo(c.Id);
@@ -107,11 +111,6 @@ namespace Reproductor_de_Musica
             }
         }
 
-       
-        public void DetenerCancion()
-        {
-            output?.Stop();
-        }
 
      
         public void SiguienteCancion()
@@ -140,11 +139,6 @@ namespace Reproductor_de_Musica
         }
 
 
-        public void AgregarACola(Cancion c)
-        {
-            cola.Encolar(c);
-        }
-
        
         private NodoCancion BuscarNodo(int id)
         {
@@ -161,6 +155,7 @@ namespace Reproductor_de_Musica
             return null;
         }
 
+        // Temporal
         public string ObtenerHistorialTexto()
         {
             NodoCancion actual = historial.Cima;
@@ -175,6 +170,7 @@ namespace Reproductor_de_Musica
             return texto;
         }
 
+        //Diferenciacion de cambio autoatico o manual
         private void Output_PlaybackStopped(object sender, StoppedEventArgs e)
         {
             if (cambioManual)
@@ -190,10 +186,20 @@ namespace Reproductor_de_Musica
             SiguienteCancion();
         }
 
+        //Determina poscion del tiempod de la cancion
         public void DetPosicion(TimeSpan tiempo)
         {
             if (audio != null && tiempo <= audio.TotalTime)
                 audio.CurrentTime = tiempo;
+        }
+
+        //Control de volumen 
+
+        public void CambiarVolumen(int valor)
+        {
+            _volumenActual = valor / 100f;
+            if (audio != null)
+                audio.Volume = _volumenActual;
         }
 
         public event Action<int> OnCancionCambiada;

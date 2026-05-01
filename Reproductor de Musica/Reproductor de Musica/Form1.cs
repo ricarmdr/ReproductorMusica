@@ -39,6 +39,24 @@ namespace Reproductor_de_Musica
             reproductor = new Reproductor(biblioteca);
             reproductor.OnCancionCambiada += SeleccionarEnGrid;
 
+            //Inicializacion y configuracion del contro del volumen
+            TrackBar trk = groupBox1.Controls["trkVolumen"] as TrackBar;
+            Label lbl = groupBox1.Controls["lblVolumen"] as Label;
+
+            if (trk != null)
+            {
+                trk.Minimum = 0;
+                trk.Maximum = 100;
+                trk.Value = 0;           
+                trk.TickFrequency = 10;
+                trk.Size = new System.Drawing.Size(90, 90);  
+                trk.Scroll -= trkVolumen_Scroll;             
+                trk.Scroll += trkVolumen_Scroll;
+            }
+
+            if (lbl != null)
+                lbl.Text = "Vol: 100%";  // valor inicial correcto
+
             //Configuracion del timer y barra de reproduccion
             timerProgreso.Interval = 500;
             timerProgreso.Tick += timerProgreso_Tick;
@@ -296,6 +314,23 @@ namespace Reproductor_de_Musica
                 trackBarProgreso.Value = (int)(pos.TotalSeconds / dur.TotalSeconds * 1000);
             lblTiempoActual.Text = pos.ToString(@"m\:ss");
             lblDuracion.Text = dur.ToString(@"m\:ss");
+
+        }
+
+        private void trkVolumen_Scroll(object sender, EventArgs e)
+        {
+            TrackBar trk = sender as TrackBar;
+            Label lbl = groupBox1.Controls["lblVolumen"] as Label;
+
+            int volumenReal = 100 - trk.Value;  
+            reproductor.CambiarVolumen(volumenReal);
+
+            if (lbl != null)
+                lbl.Text = "Vol: " + volumenReal + "%";
+        }
+
+        private void Form1_Load_1(object sender, EventArgs e)
+        {
 
         }
     }
