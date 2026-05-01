@@ -30,79 +30,45 @@
         {
             this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnPlayPause = new System.Windows.Forms.Button();
-            this.btnSiguiente = new System.Windows.Forms.Button();
-            this.btnAnterior = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnHistorial = new System.Windows.Forms.Button();
+            this.lblDuracion = new System.Windows.Forms.Label();
+            this.lblTiempoActual = new System.Windows.Forms.Label();
+            this.trackBarProgreso = new System.Windows.Forms.TrackBar();
+            this.btnPlayPause = new System.Windows.Forms.Button();
+            this.btnAnterior = new System.Windows.Forms.Button();
+            this.btnSiguiente = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnAgregar = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.dvgCanciones = new System.Windows.Forms.DataGridView();
             this.timerProgreso = new System.Windows.Forms.Timer(this.components);
-            this.trackBarProgreso = new System.Windows.Forms.TrackBar();
-            this.lblTiempoActual = new System.Windows.Forms.Label();
-            this.lblDuracion = new System.Windows.Forms.Label();
+            this.trkVolumen = new System.Windows.Forms.TrackBar();
+            this.lblVolumen = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarProgreso)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dvgCanciones)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarProgreso)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trkVolumen)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.lblVolumen);
+            this.groupBox1.Controls.Add(this.trkVolumen);
             this.groupBox1.Controls.Add(this.btnHistorial);
             this.groupBox1.Controls.Add(this.lblDuracion);
+            this.groupBox1.Controls.Add(this.btnSiguiente);
             this.groupBox1.Controls.Add(this.lblTiempoActual);
             this.groupBox1.Controls.Add(this.trackBarProgreso);
             this.groupBox1.Controls.Add(this.btnPlayPause);
             this.groupBox1.Controls.Add(this.btnAnterior);
             this.groupBox1.Location = new System.Drawing.Point(6, 543);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1002, 152);
+            this.groupBox1.Size = new System.Drawing.Size(1130, 152);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Reproductor ";
-            // 
-            // btnPlayPause
-            // 
-            this.btnPlayPause.Location = new System.Drawing.Point(391, 100);
-            this.btnPlayPause.Name = "btnPlayPause";
-            this.btnPlayPause.Size = new System.Drawing.Size(213, 46);
-            this.btnPlayPause.TabIndex = 2;
-            this.btnPlayPause.Text = "▶ Reproducir";
-            this.btnPlayPause.UseVisualStyleBackColor = true;
-            this.btnPlayPause.Click += new System.EventHandler(this.btnPlayPause_Click);
-            // 
-            // btnSiguiente
-            // 
-            this.btnSiguiente.Location = new System.Drawing.Point(675, 651);
-            this.btnSiguiente.Name = "btnSiguiente";
-            this.btnSiguiente.Size = new System.Drawing.Size(131, 44);
-            this.btnSiguiente.TabIndex = 3;
-            this.btnSiguiente.Text = "Siguiente";
-            this.btnSiguiente.UseVisualStyleBackColor = true;
-            this.btnSiguiente.Click += new System.EventHandler(this.btnSiguiente_Click);
-            // 
-            // btnAnterior
-            // 
-            this.btnAnterior.Location = new System.Drawing.Point(206, 102);
-            this.btnAnterior.Name = "btnAnterior";
-            this.btnAnterior.Size = new System.Drawing.Size(131, 44);
-            this.btnAnterior.TabIndex = 0;
-            this.btnAnterior.Text = "Anterior";
-            this.btnAnterior.UseVisualStyleBackColor = true;
-            this.btnAnterior.Click += new System.EventHandler(this.btnAnterior_Click);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.btnAgregar);
-            this.groupBox2.Location = new System.Drawing.Point(6, 6);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(154, 338);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Acciones";
             // 
             // btnHistorial
             // 
@@ -113,6 +79,72 @@
             this.btnHistorial.Text = "Historial";
             this.btnHistorial.UseVisualStyleBackColor = true;
             this.btnHistorial.Click += new System.EventHandler(this.btnHistorial_Click);
+            // 
+            // lblDuracion
+            // 
+            this.lblDuracion.AutoSize = true;
+            this.lblDuracion.Location = new System.Drawing.Point(881, 38);
+            this.lblDuracion.Name = "lblDuracion";
+            this.lblDuracion.Size = new System.Drawing.Size(44, 16);
+            this.lblDuracion.TabIndex = 6;
+            this.lblDuracion.Text = "label2";
+            // 
+            // lblTiempoActual
+            // 
+            this.lblTiempoActual.AutoSize = true;
+            this.lblTiempoActual.Location = new System.Drawing.Point(246, 38);
+            this.lblTiempoActual.Name = "lblTiempoActual";
+            this.lblTiempoActual.Size = new System.Drawing.Size(44, 16);
+            this.lblTiempoActual.TabIndex = 5;
+            this.lblTiempoActual.Text = "label1";
+            // 
+            // trackBarProgreso
+            // 
+            this.trackBarProgreso.Location = new System.Drawing.Point(305, 36);
+            this.trackBarProgreso.Name = "trackBarProgreso";
+            this.trackBarProgreso.Size = new System.Drawing.Size(570, 56);
+            this.trackBarProgreso.TabIndex = 4;
+            this.trackBarProgreso.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            // 
+            // btnPlayPause
+            // 
+            this.btnPlayPause.Location = new System.Drawing.Point(483, 98);
+            this.btnPlayPause.Name = "btnPlayPause";
+            this.btnPlayPause.Size = new System.Drawing.Size(213, 46);
+            this.btnPlayPause.TabIndex = 2;
+            this.btnPlayPause.Text = "▶ Reproducir";
+            this.btnPlayPause.UseVisualStyleBackColor = true;
+            this.btnPlayPause.Click += new System.EventHandler(this.btnPlayPause_Click);
+            // 
+            // btnAnterior
+            // 
+            this.btnAnterior.Location = new System.Drawing.Point(323, 98);
+            this.btnAnterior.Name = "btnAnterior";
+            this.btnAnterior.Size = new System.Drawing.Size(131, 44);
+            this.btnAnterior.TabIndex = 0;
+            this.btnAnterior.Text = "Anterior";
+            this.btnAnterior.UseVisualStyleBackColor = true;
+            this.btnAnterior.Click += new System.EventHandler(this.btnAnterior_Click);
+            // 
+            // btnSiguiente
+            // 
+            this.btnSiguiente.Location = new System.Drawing.Point(734, 99);
+            this.btnSiguiente.Name = "btnSiguiente";
+            this.btnSiguiente.Size = new System.Drawing.Size(131, 44);
+            this.btnSiguiente.TabIndex = 3;
+            this.btnSiguiente.Text = "Siguiente";
+            this.btnSiguiente.UseVisualStyleBackColor = true;
+            this.btnSiguiente.Click += new System.EventHandler(this.btnSiguiente_Click);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.btnAgregar);
+            this.groupBox2.Location = new System.Drawing.Point(6, 6);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(311, 531);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Acciones";
             // 
             // btnAgregar
             // 
@@ -127,9 +159,9 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.dvgCanciones);
-            this.groupBox3.Location = new System.Drawing.Point(547, 12);
+            this.groupBox3.Location = new System.Drawing.Point(329, 12);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(461, 525);
+            this.groupBox3.Size = new System.Drawing.Size(807, 525);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Playlist Actual";
@@ -137,11 +169,11 @@
             // dvgCanciones
             // 
             this.dvgCanciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dvgCanciones.Location = new System.Drawing.Point(15, 24);
+            this.dvgCanciones.Location = new System.Drawing.Point(222, 21);
             this.dvgCanciones.Name = "dvgCanciones";
             this.dvgCanciones.RowHeadersWidth = 51;
             this.dvgCanciones.RowTemplate.Height = 24;
-            this.dvgCanciones.Size = new System.Drawing.Size(430, 485);
+            this.dvgCanciones.Size = new System.Drawing.Size(563, 485);
             this.dvgCanciones.TabIndex = 0;
             this.dvgCanciones.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dvgCanciones_CellContentClick);
             // 
@@ -149,50 +181,42 @@
             // 
             this.timerProgreso.Tick += new System.EventHandler(this.timerProgreso_Tick);
             // 
-            // trackBarProgreso
+            // trkVolumen
             // 
-            this.trackBarProgreso.Location = new System.Drawing.Point(188, 38);
-            this.trackBarProgreso.Name = "trackBarProgreso";
-            this.trackBarProgreso.Size = new System.Drawing.Size(650, 56);
-            this.trackBarProgreso.TabIndex = 4;
-            this.trackBarProgreso.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            this.trkVolumen.Location = new System.Drawing.Point(923, 96);
+            this.trkVolumen.Name = "trkVolumen";
+            this.trkVolumen.Size = new System.Drawing.Size(135, 56);
+            this.trkVolumen.TabIndex = 7;
+            this.trkVolumen.Scroll += new System.EventHandler(this.trkVolumen_Scroll);
             // 
-            // lblTiempoActual
+            // lblVolumen
             // 
-            this.lblTiempoActual.AutoSize = true;
-            this.lblTiempoActual.Location = new System.Drawing.Point(110, 38);
-            this.lblTiempoActual.Name = "lblTiempoActual";
-            this.lblTiempoActual.Size = new System.Drawing.Size(44, 16);
-            this.lblTiempoActual.TabIndex = 5;
-            this.lblTiempoActual.Text = "label1";
-            // 
-            // lblDuracion
-            // 
-            this.lblDuracion.AutoSize = true;
-            this.lblDuracion.Location = new System.Drawing.Point(864, 38);
-            this.lblDuracion.Name = "lblDuracion";
-            this.lblDuracion.Size = new System.Drawing.Size(44, 16);
-            this.lblDuracion.TabIndex = 6;
-            this.lblDuracion.Text = "label2";
+            this.lblVolumen.AutoSize = true;
+            this.lblVolumen.Location = new System.Drawing.Point(1064, 99);
+            this.lblVolumen.Name = "lblVolumen";
+            this.lblVolumen.Size = new System.Drawing.Size(44, 16);
+            this.lblVolumen.TabIndex = 8;
+            this.lblVolumen.Text = "label2";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.ClientSize = new System.Drawing.Size(1020, 707);
+            this.ClientSize = new System.Drawing.Size(1160, 707);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.btnSiguiente);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
             this.Text = "Reproductor de Musica";
+            this.Load += new System.EventHandler(this.Form1_Load_1);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarProgreso)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dvgCanciones)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarProgreso)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trkVolumen)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -212,6 +236,8 @@
         private System.Windows.Forms.Timer timerProgreso;
         private System.Windows.Forms.Label lblDuracion;
         private System.Windows.Forms.Label lblTiempoActual;
+        private System.Windows.Forms.Label lblVolumen;
+        private System.Windows.Forms.TrackBar trkVolumen;
     }
 }
 
