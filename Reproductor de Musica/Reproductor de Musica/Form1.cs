@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NAudio.Wave;
-
+using System.Drawing.Drawing2D;
 
 
 namespace Reproductor_de_Musica
@@ -20,38 +20,40 @@ namespace Reproductor_de_Musica
         Reproductor reproductor;
         NodoCancion actual;
         private bool _scrubbing = false;
+
         public Form1()
         {
             InitializeComponent();
-            this.Load += Form1_Load;
-           
+            this.Load += Form1_Load_1;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Form1_Load_1(object sender, EventArgs e)
         {
             //Biblioteca general
-            biblioteca = ConexionGlobal.Instancia.ObtenerCancion(); 
+            biblioteca = ConexionGlobal.Instancia.ObtenerCancion();
             //Configurar y cargar dgv con las cnaciones
             ConfigurarColumnasDGV();
-            CargarDataGrid(); 
+            CargarDataGrid();
+            dvgCanciones.ClearSelection();
 
             //Inicializacion del reproductor
             reproductor = new Reproductor(biblioteca);
             reproductor.OnCancionCambiada += SeleccionarEnGrid;
 
             //Inicializacion y configuracion del contro del volumen
-            TrackBar trk = groupBox1.Controls["trkVolumen"] as TrackBar;
-            Label lbl = groupBox1.Controls["lblVolumen"] as Label;
+            TrackBar trk = panelVol.Controls["trkVolumen"] as TrackBar;
+            Label lbl = panelVol.Controls["lblVolumen"] as Label;
 
             if (trk != null)
             {
                 trk.Minimum = 0;
                 trk.Maximum = 100;
-                trk.Value = 0;           
+                trk.Value = 100;
                 trk.TickFrequency = 10;
-                trk.Size = new System.Drawing.Size(90, 90);  
-                trk.Scroll -= trkVolumen_Scroll;             
+                trk.Size = new System.Drawing.Size(90, 90);
+                trk.Scroll -= trkVolumen_Scroll;
                 trk.Scroll += trkVolumen_Scroll;
+
             }
 
             if (lbl != null)
@@ -71,6 +73,24 @@ namespace Reproductor_de_Musica
                 reproductor.DetPosicion(TimeSpan.FromSeconds(ratio * reproductor.Duracion.TotalSeconds));
             };
 
+            //Inicializa el botòn de play/pause con forma circular
+            GraphicsPath path = new GraphicsPath();
+            path.AddEllipse(0, 0, btnPlayPause.Width, btnPlayPause.Height);
+            btnPlayPause.Region = new Region(path);
+
+            //Agrega margen al botón de la biblioteca para separarlo del contenido superior
+            btnBiblio.Margin = new Padding(3,45,3,3);
+
+            //Centra el panel de reproducción dentro del panel3
+            panelRep.Left = (panel3.Width - panelRep.Width) / 2;
+
+            panelHoy.Margin = new Padding(20, 0, 0, 0);
+            panelHoy.Width = 300;
+        }
+
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
@@ -79,7 +99,7 @@ namespace Reproductor_de_Musica
             {
                 if (formAgregar.ShowDialog() == DialogResult.OK)
                 {
-                    // Llamar a tu método ya corregido
+                    // Llamar al método para agregar cancion
                     AgregarCancion1(
                         formAgregar.NombreCancion,
                         formAgregar.ArtistaCancion,
@@ -89,6 +109,103 @@ namespace Reproductor_de_Musica
                 }
             }
         }
+
+        //Al darle clic a la fila de la cancion, se reproduce esa cancion
+        private void dvgCanciones_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Evita que falle si hacen click en encabezados
+            if (e.RowIndex < 0) return;
+
+            Cancion c = ObtenerCancionSeleccionada();
+
+            if (c == null) return;
+
+            reproductor.ReproducirCancion(c);
+
+            MostrarCancionActual(c);
+            ActualizarBotonPlayPause();
+        }
+
+        private void btnPlayPause_Click(object sender, EventArgs e)
+        {
+            if (reproductor.EstadoReproduccion == PlaybackState.Playing)
+            {
+                reproductor.PausarCancion();
+            }
+            else
+            {
+                Cancion c = ObtenerCancionSeleccionada();
+
+                if (c == null)
+                {
+                    MessageBox.Show("Selecciona una canción primero.");
+                    return;
+                }
+
+                reproductor.ReproducirCancion(c);
+                MostrarCancionActual(c);
+            }
+            ActualizarBotonPlayPause();
+        }
+
+        private void btnAnterior_Click(object sender, EventArgs e)
+        {
+            reproductor.CancionAnterior();
+        }
+
+        private void btnSiguiente_Click(object sender, EventArgs e)
+        {
+            reproductor.SiguienteCancion();
+        }
+
+        private void btnHistorial_Click(object sender, EventArgs e)
+        {
+            string historialTexto = reproductor.ObtenerHistorialTexto();
+            MessageBox.Show(historialTexto);
+        }
+
+        private void timerProgreso_Tick(object sender, EventArgs e)
+        {
+            if (_scrubbing || reproductor == null) return;
+            var dur = reproductor.Duracion;
+            var pos = reproductor.Posicion;
+            if (dur.TotalSeconds > 0)
+                trackBarProgreso.Value = (int)(pos.TotalSeconds / dur.TotalSeconds * 1000);
+            lblTiempoActual.Text = pos.ToString(@"m\:ss");
+            lblDuracion.Text = dur.ToString(@"m\:ss");
+        }
+
+        private void trkVolumen_Scroll(object sender, EventArgs e)
+        {
+            TrackBar trk = sender as TrackBar;
+            Label lbl = panelVol.Controls["lblVolumen"] as Label;
+
+            int volumenReal = trk.Value;  
+            reproductor.CambiarVolumen(volumenReal);
+
+            if (lbl != null)
+                lbl.Text = "Vol: " + volumenReal + "%";
+        }
+        private void btnrayitas_Click(object sender, EventArgs e)
+        {
+            //al darle click al boton de las rayitas, se muestra o se oculta el submenu
+            psubmenu.Visible = !psubmenu.Visible;
+        }
+        private void dvgCanciones_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+                dvgCanciones.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(35, 35, 35);
+        }
+
+        private void dvgCanciones_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+                dvgCanciones.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(18, 18, 18);
+        }
+
+        /*////////////////////////////////////////////////////////////////////////////////////
+                                        METODOS Y FUNCIONES
+        /////////////////////////////////////////////////////////////////////////////////////*/
 
         public void AgregarCancion1(string nombre, string artistas, string rutaArchivo, TimeSpan duracion)
         {
@@ -128,8 +245,6 @@ namespace Reproductor_de_Musica
                     return;
                 }
 
-
-
                 Cancion nueva = new Cancion(0, nombre, artistas, rutaRelativa, duracion);
 
                 int id = ConexionGlobal.Instancia.GuardarCancion(nueva);
@@ -145,11 +260,6 @@ namespace Reproductor_de_Musica
             {
                 MessageBox.Show("Error al agregar canción: " + ex.Message);
             }
-        }
-
-        private void dvgCanciones_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            
         }
 
         public void CargarDataGrid()
@@ -182,7 +292,6 @@ namespace Reproductor_de_Musica
 
             dvgCanciones.DataSource = tabla;
         }
-
         public void SeleccionarEnGrid(int idCancion)
         {
             if (dvgCanciones.InvokeRequired)
@@ -202,76 +311,17 @@ namespace Reproductor_de_Musica
                 }
             }
         }
-
-        private void btnReproducir_Click(object sender, EventArgs e)
-        {
-            Cancion c = ObtenerCancionSeleccionada();
-            if (c == null) { MessageBox.Show("Selecciona una canción."); return; }
-            reproductor.ReproducirCancion(c);
-            ActualizarBotonPlayPause();
-        }
-
-        private void btnPausar_Click(object sender, EventArgs e)
-        {
-            reproductor.PausarCancion();
-        }
-
-        private void btnAnterior_Click(object sender, EventArgs e)
-        {
-            reproductor.CancionAnterior();
-        }
-
-        private void btnSiguiente_Click(object sender, EventArgs e)
-        {
-            reproductor.SiguienteCancion();
-        }
-
-        private void btnHistorial_Click(object sender, EventArgs e)
-        {
-            string historialTexto = reproductor.ObtenerHistorialTexto();
-            MessageBox.Show(historialTexto);
-        }
-
-        private void btnPlayPause_Click(object sender, EventArgs e)
-        {
-            // Verifica que haya una cancinn seleccionada
-            if (dvgCanciones.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Selecciona una canción primero.");
-                return;
-            }
-
-            // Obtiene la cancion seleccionada 
-            int id = Convert.ToInt32(dvgCanciones.SelectedRows[0].Cells["Id"].Value);
-            string nombre = dvgCanciones.SelectedRows[0].Cells["Nombre"].Value.ToString();
-            string artista = dvgCanciones.SelectedRows[0].Cells["Artista"].Value.ToString();
-            string ruta = dvgCanciones.SelectedRows[0].Cells["RutaArchivo"].Value.ToString();
-
-            TimeSpan duracion = TimeSpan.Zero;
-            if (dvgCanciones.SelectedRows[0].Cells["Duracion"].Value != null)
-                TimeSpan.TryParse(dvgCanciones.SelectedRows[0].Cells["Duracion"].Value.ToString(), out duracion);
-
-            Cancion seleccionada = new Cancion(id, nombre, artista, ruta, duracion);
-
-            
-            reproductor.ReproducirCancion(seleccionada);
-
-            // Actualizar el boton segun el estado resultante
-            ActualizarBotonPlayPause();
-        }
-
         private void ActualizarBotonPlayPause()
         {
             if (reproductor.EstadoReproduccion == PlaybackState.Playing)
-                btnPlayPause.Text = "⏸ Pausar";
+                btnPlayPause.BackgroundImage = Properties.Resources.pausa;
             else
-                btnPlayPause.Text = "▶ Reproducir";
+                btnPlayPause.BackgroundImage = Properties.Resources.play;
         }
-
         private void ConfigurarColumnasDGV()
         {
             dvgCanciones.AutoGenerateColumns = false;
-            dvgCanciones.AllowUserToAddRows = false; 
+            dvgCanciones.AllowUserToAddRows = false;
             dvgCanciones.Columns.Clear();
 
             dvgCanciones.Columns.Add(new DataGridViewTextBoxColumn { Name = "Id", DataPropertyName = "Id", Visible = false });
@@ -300,39 +350,29 @@ namespace Reproductor_de_Musica
             );
         }
 
-        private void trackBar1_Scroll(object sender, EventArgs e)
+        // Muestra la información de la canción actual en el panel de reproducción
+        private void MostrarCancionActual(Cancion c)
         {
+            if (c == null) return;
 
+            lblName.Text = c.Nombre;
+            lblArtist.Text = c.Artista;
+
+            lblName.Visible = true;
+            lblArtist.Visible = true;
+            picAlbum.Visible = true;
+
+            // imagen genérica
+            picAlbum.Image = Properties.Resources.disco;
         }
 
-        private void timerProgreso_Tick(object sender, EventArgs e)
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (_scrubbing || reproductor == null) return;
-            var dur = reproductor.Duracion;
-            var pos = reproductor.Posicion;
-            if (dur.TotalSeconds > 0)
-                trackBarProgreso.Value = (int)(pos.TotalSeconds / dur.TotalSeconds * 1000);
-            lblTiempoActual.Text = pos.ToString(@"m\:ss");
-            lblDuracion.Text = dur.ToString(@"m\:ss");
+            DialogResult resp = MessageBox.Show("¿Estás seguro que deseas salir?", "Confirmar Salida" ,MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-        }
-
-        private void trkVolumen_Scroll(object sender, EventArgs e)
-        {
-            TrackBar trk = sender as TrackBar;
-            Label lbl = groupBox1.Controls["lblVolumen"] as Label;
-
-            int volumenReal = 100 - trk.Value;  
-            reproductor.CambiarVolumen(volumenReal);
-
-            if (lbl != null)
-                lbl.Text = "Vol: " + volumenReal + "%";
-        }
-
-        private void Form1_Load_1(object sender, EventArgs e)
-        {
-
+            if (resp == DialogResult.No)
+                e.Cancel = true;
         }
     }
-    }
+}
 
