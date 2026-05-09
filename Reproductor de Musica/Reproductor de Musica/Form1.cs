@@ -86,6 +86,8 @@ namespace Reproductor_de_Musica
 
             panelHoy.Margin = new Padding(20, 0, 0, 0);
             panelHoy.Width = 300;
+
+            lblTitulo.Text = "Biblioteca";
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
