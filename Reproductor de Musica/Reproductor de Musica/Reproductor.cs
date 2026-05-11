@@ -155,19 +155,10 @@ namespace Reproductor_de_Musica
             return null;
         }
 
-        // Temporal
-        public string ObtenerHistorialTexto()
+        //Historial
+        public List<Cancion> ObtenerHistorial()
         {
-            NodoCancion actual = historial.Cima;
-            string texto = "=== Historial ===\n";
-
-            while (actual != null)
-            {
-                texto += actual.Dato.Nombre + " - " + actual.Dato.Artista + "\n";
-                actual = actual.Siguiente;
-            }
-
-            return texto;
+            return historial.ObtenerCanciones();
         }
 
         //Diferenciacion de cambio autoatico o manual
