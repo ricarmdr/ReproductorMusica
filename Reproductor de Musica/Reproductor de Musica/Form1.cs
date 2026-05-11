@@ -162,8 +162,16 @@ namespace Reproductor_de_Musica
 
         private void btnHistorial_Click(object sender, EventArgs e)
         {
-            string historialTexto = reproductor.ObtenerHistorialTexto();
-            MessageBox.Show(historialTexto);
+            List<Cancion> historial = reproductor.ObtenerHistorial();
+
+            string texto = "=== HISTORIAL ===\n\n";
+
+            foreach (Cancion c in historial)
+            {
+                texto += c.Nombre + " - " + c.Artista + "\n";
+            }
+
+            MessageBox.Show(texto);
         }
 
         private void timerProgreso_Tick(object sender, EventArgs e)

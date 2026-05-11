@@ -48,5 +48,19 @@ namespace Reproductor_de_Musica
         {
             Cima = null;
         }
+        public List<Cancion> ObtenerCanciones()
+        {
+            List<Cancion> lista = new List<Cancion>();
+
+            NodoCancion actual = Cima;
+
+            while (actual != null)
+            {
+                lista.Add(actual.Dato);
+                actual = actual.Siguiente;
+            }
+
+            return lista;
+        }
     }
 }
