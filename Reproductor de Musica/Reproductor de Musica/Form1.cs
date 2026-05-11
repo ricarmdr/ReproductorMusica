@@ -375,6 +375,12 @@ namespace Reproductor_de_Musica
             if (resp == DialogResult.No)
                 e.Cancel = true;
         }
+
+        private void btnInfo_Click(object sender, EventArgs e)
+        {
+            Form info = new FormInfo();
+            info.ShowDialog();
+        }
     }
 }
 
