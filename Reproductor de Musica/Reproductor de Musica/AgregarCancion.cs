@@ -23,14 +23,6 @@ namespace Reproductor_de_Musica
             InitializeComponent();
         }
 
-        private void AgregarCancion_Load(object sender, EventArgs e)
-        {
-            
-
-
-
-        }
-
         private void btnRuta_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog dialog = new OpenFileDialog())
@@ -41,6 +33,13 @@ namespace Reproductor_de_Musica
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     txtRuta.Text = dialog.FileName;
+
+                    // Habilitar controles
+                    txtNombre.Enabled = true;
+                    txtNombre.BackColor = Color.FromArgb(30,30,30);
+                    txtArtista.Enabled = true;
+                    txtArtista.BackColor = Color.FromArgb(30,30,30);
+
                     // Autocompleta el nombre si esta vacío
                     if (string.IsNullOrWhiteSpace(txtNombre.Text))
                         txtNombre.Text = Path.GetFileNameWithoutExtension(dialog.FileName);
@@ -51,8 +50,6 @@ namespace Reproductor_de_Musica
                 }
             }
         }
-
-        
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
@@ -80,17 +77,17 @@ namespace Reproductor_de_Musica
             // Validaciones
             if (string.IsNullOrWhiteSpace(txtNombre.Text))
             {
-                MessageBox.Show("Ingresa el nombre de la canción.");
+                MessageBox.Show("Ingresa el nombre de la canción.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (string.IsNullOrWhiteSpace(txtArtista.Text))
             {
-                MessageBox.Show("Ingresa el artista.");
+                MessageBox.Show("Ingresa el artista.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (string.IsNullOrWhiteSpace(txtRuta.Text) || !File.Exists(txtRuta.Text))
             {
-                MessageBox.Show("Selecciona un archivo de audio válido.");
+                MessageBox.Show("Selecciona un archivo de audio válido.", "Error", MessageBoxButtons.OK ,MessageBoxIcon.Error);
                 return;
             }
 
