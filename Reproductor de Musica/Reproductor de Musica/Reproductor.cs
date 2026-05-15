@@ -156,9 +156,9 @@ namespace Reproductor_de_Musica
         }
 
         //Historial
-        public List<Cancion> ObtenerHistorial()
+        public NodoCancion ObtenerHistorial()
         {
-            return historial.ObtenerCanciones();
+            return historial.Cima;
         }
 
         //Diferenciacion de cambio autoatico o manual

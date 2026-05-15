@@ -195,23 +195,37 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormCrearPlaylist.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormCrearPlaylist.Designer.cs">
-      <DependentUpon>FormCrearPlaylist.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormInfo.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormInfo.Designer.cs">
-      <DependentUpon>FormInfo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormVerPlaylist.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormVerPlaylist.Designer.cs">
-      <DependentUpon>FormVerPlaylist.cs</DependentUpon>
+<Compile Include="FrmHistorial.cs">
+  <SubType>Form</SubType>
+</Compile>
+
+<Compile Include="FrmHistorial.Designer.cs">
+  <DependentUpon>FrmHistorial.cs</DependentUpon>
+</Compile>
+
+<Compile Include="FormCrearPlaylist.cs">
+  <SubType>Form</SubType>
+</Compile>
+
+<Compile Include="FormCrearPlaylist.Designer.cs">
+  <DependentUpon>FormCrearPlaylist.cs</DependentUpon>
+</Compile>
+
+<Compile Include="FormInfo.cs">
+  <SubType>Form</SubType>
+</Compile>
+
+<Compile Include="FormInfo.Designer.cs">
+  <DependentUpon>FormInfo.cs</DependentUpon>
+</Compile>
+
+<Compile Include="FormVerPlaylist.cs">
+  <SubType>Form</SubType>
+</Compile>
+
+<Compile Include="FormVerPlaylist.Designer.cs">
+  <DependentUpon>FormVerPlaylist.cs</DependentUpon>
+</Compile>
     </Compile>
     <Compile Include="GestorBaseDatos.cs" />
     <Compile Include="Historial.cs" />
@@ -226,14 +240,21 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormCrearPlaylist.resx">
-      <DependentUpon>FormCrearPlaylist.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormInfo.resx">
-      <DependentUpon>FormInfo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormVerPlaylist.resx">
-      <DependentUpon>FormVerPlaylist.cs</DependentUpon>
+<EmbeddedResource Include="FrmHistorial.resx">
+  <DependentUpon>FrmHistorial.cs</DependentUpon>
+</EmbeddedResource>
+
+<EmbeddedResource Include="FormCrearPlaylist.resx">
+  <DependentUpon>FormCrearPlaylist.cs</DependentUpon>
+</EmbeddedResource>
+
+<EmbeddedResource Include="FormInfo.resx">
+  <DependentUpon>FormInfo.cs</DependentUpon>
+</EmbeddedResource>
+
+<EmbeddedResource Include="FormVerPlaylist.resx">
+  <DependentUpon>FormVerPlaylist.cs</DependentUpon>
+</EmbeddedResource>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
