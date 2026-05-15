@@ -83,13 +83,13 @@
             // 
             this.txtNombrePlaylist.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.txtNombrePlaylist.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtNombrePlaylist.Enabled = false;
             this.txtNombrePlaylist.ForeColor = System.Drawing.Color.White;
             this.txtNombrePlaylist.Location = new System.Drawing.Point(126, 80);
             this.txtNombrePlaylist.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtNombrePlaylist.Name = "txtNombrePlaylist";
             this.txtNombrePlaylist.Size = new System.Drawing.Size(296, 22);
             this.txtNombrePlaylist.TabIndex = 10;
+            this.txtNombrePlaylist.TextChanged += new System.EventHandler(this.txtNombrePlaylist_TextChanged);
             // 
             // FormCrearPlaylist
             // 
