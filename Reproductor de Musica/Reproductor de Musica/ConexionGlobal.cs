@@ -12,7 +12,7 @@ namespace Reproductor_de_Musica
 
         static ConexionGlobal()
         {
-            string conexion = @"Server=DESKTOP-2KFHATN\MSSQLSERVERGOD;
+            string conexion =  @"Server=localhost;
                    Database=ReproductorMusica;
                    Trusted_Connection=True;";
 
