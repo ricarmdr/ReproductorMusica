@@ -226,7 +226,6 @@
 <Compile Include="FormVerPlaylist.Designer.cs">
   <DependentUpon>FormVerPlaylist.cs</DependentUpon>
 </Compile>
-    </Compile>
     <Compile Include="GestorBaseDatos.cs" />
     <Compile Include="Historial.cs" />
     <Compile Include="NodoCancion.cs" />
