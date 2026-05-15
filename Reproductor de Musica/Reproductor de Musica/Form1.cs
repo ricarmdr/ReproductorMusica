@@ -389,6 +389,23 @@ namespace Reproductor_de_Musica
             Form info = new FormInfo();
             info.ShowDialog();
         }
+
+        private void btnCrearPlaylist_Click(object sender, EventArgs e)
+        {
+            FormCrearPlaylist ventanaCrear = new FormCrearPlaylist();
+            DialogResult resultado = ventanaCrear.ShowDialog();
+            // Si en este punto se guardo con exito en la playlist, se manda directo a verlas.
+            if (resultado == DialogResult.OK)
+            {
+                btnverplaylist_Click(sender, e);
+            }
+        }
+
+        private void btnverplaylist_Click(object sender, EventArgs e)
+        {
+            FormVerPlaylist ventanaVer = new FormVerPlaylist();
+            ventanaVer.ShowDialog();
+        }
     }
 }
 
