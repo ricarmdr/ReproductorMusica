@@ -42,5 +42,10 @@ namespace Reproductor_de_Musica
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
+
+        private void txtNombrePlaylist_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
