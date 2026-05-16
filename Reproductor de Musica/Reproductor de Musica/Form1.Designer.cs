@@ -31,13 +31,9 @@ namespace Reproductor_de_Musica
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.timerProgreso = new System.Windows.Forms.Timer(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnrayitas = new System.Windows.Forms.Button();
             this.psubmenu = new System.Windows.Forms.Panel();
             this.btnSalir = new System.Windows.Forms.Button();
             this.btnInfo = new System.Windows.Forms.Button();
@@ -47,37 +43,37 @@ namespace Reproductor_de_Musica
             this.btnverplaylist = new System.Windows.Forms.Button();
             this.btnHistorial = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.dvgCanciones = new System.Windows.Forms.DataGridView();
+            this.panelContenido = new System.Windows.Forms.Panel();
             this.panelTitulo = new System.Windows.Forms.Panel();
             this.lblTitulo = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panelHoy = new System.Windows.Forms.Panel();
             this.lblArtist = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
-            this.picAlbum = new System.Windows.Forms.PictureBox();
             this.panelVol = new System.Windows.Forms.Panel();
             this.trkVolumen = new System.Windows.Forms.TrackBar();
             this.lblVolumen = new System.Windows.Forms.Label();
             this.panelRep = new System.Windows.Forms.Panel();
             this.lblTiempoActual = new System.Windows.Forms.Label();
             this.trackBarProgreso = new System.Windows.Forms.TrackBar();
-            this.btnAnterior = new System.Windows.Forms.Button();
             this.lblDuracion = new System.Windows.Forms.Label();
+            this.btnrayitas = new System.Windows.Forms.Button();
+            this.picAlbum = new System.Windows.Forms.PictureBox();
+            this.btnAnterior = new System.Windows.Forms.Button();
             this.btnSiguiente = new System.Windows.Forms.Button();
             this.btnPlayPause = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.psubmenu.SuspendLayout();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dvgCanciones)).BeginInit();
             this.panelTitulo.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panelHoy.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picAlbum)).BeginInit();
             this.panelVol.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trkVolumen)).BeginInit();
             this.panelRep.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarProgreso)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picAlbum)).BeginInit();
             this.SuspendLayout();
             // 
             // timerProgreso
@@ -108,23 +104,6 @@ namespace Reproductor_de_Musica
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(225, 450);
             this.flowLayoutPanel1.TabIndex = 15;
-            // 
-            // btnrayitas
-            // 
-            this.btnrayitas.BackColor = System.Drawing.Color.Transparent;
-            this.btnrayitas.BackgroundImage = global::Reproductor_de_Musica.Properties.Resources.menu;
-            this.btnrayitas.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnrayitas.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnrayitas.FlatAppearance.BorderSize = 0;
-            this.btnrayitas.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.btnrayitas.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.btnrayitas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnrayitas.Location = new System.Drawing.Point(3, 3);
-            this.btnrayitas.Name = "btnrayitas";
-            this.btnrayitas.Size = new System.Drawing.Size(40, 48);
-            this.btnrayitas.TabIndex = 8;
-            this.btnrayitas.UseVisualStyleBackColor = false;
-            this.btnrayitas.Click += new System.EventHandler(this.btnrayitas_Click);
             // 
             // psubmenu
             // 
@@ -191,6 +170,7 @@ namespace Reproductor_de_Musica
             this.btnBiblio.TabIndex = 9;
             this.btnBiblio.Text = "Biblioteca";
             this.btnBiblio.UseVisualStyleBackColor = false;
+            this.btnBiblio.Click += new System.EventHandler(this.btnBiblio_Click);
             // 
             // btnAgregar
             // 
@@ -269,7 +249,7 @@ namespace Reproductor_de_Musica
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(17)))), ((int)(((byte)(23)))));
-            this.panel2.Controls.Add(this.dvgCanciones);
+            this.panel2.Controls.Add(this.panelContenido);
             this.panel2.Controls.Add(this.panelTitulo);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(225, 0);
@@ -277,52 +257,14 @@ namespace Reproductor_de_Musica
             this.panel2.Size = new System.Drawing.Size(701, 450);
             this.panel2.TabIndex = 4;
             // 
-            // dvgCanciones
+            // panelContenido
             // 
-            this.dvgCanciones.AllowUserToResizeColumns = false;
-            this.dvgCanciones.AllowUserToResizeRows = false;
-            this.dvgCanciones.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dvgCanciones.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.dvgCanciones.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dvgCanciones.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            this.dvgCanciones.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Gray;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dvgCanciones.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dvgCanciones.ColumnHeadersHeight = 40;
-            this.dvgCanciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(215)))), ((int)(((byte)(96)))));
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dvgCanciones.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dvgCanciones.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dvgCanciones.EnableHeadersVisualStyles = false;
-            this.dvgCanciones.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.dvgCanciones.Location = new System.Drawing.Point(0, 100);
-            this.dvgCanciones.Margin = new System.Windows.Forms.Padding(22, 2, 2, 2);
-            this.dvgCanciones.MultiSelect = false;
-            this.dvgCanciones.Name = "dvgCanciones";
-            this.dvgCanciones.ReadOnly = true;
-            this.dvgCanciones.RowHeadersVisible = false;
-            this.dvgCanciones.RowHeadersWidth = 51;
-            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(5);
-            this.dvgCanciones.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            this.dvgCanciones.RowTemplate.Height = 35;
-            this.dvgCanciones.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dvgCanciones.Size = new System.Drawing.Size(701, 350);
-            this.dvgCanciones.TabIndex = 1;
-            this.dvgCanciones.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dvgCanciones_CellClick);
-            this.dvgCanciones.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dvgCanciones_CellMouseEnter);
-            this.dvgCanciones.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dvgCanciones_CellMouseLeave);
+            this.panelContenido.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.panelContenido.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelContenido.Location = new System.Drawing.Point(0, 100);
+            this.panelContenido.Name = "panelContenido";
+            this.panelContenido.Size = new System.Drawing.Size(701, 350);
+            this.panelContenido.TabIndex = 3;
             // 
             // panelTitulo
             // 
@@ -393,23 +335,12 @@ namespace Reproductor_de_Musica
             this.lblName.Text = "label1";
             this.lblName.Visible = false;
             // 
-            // picAlbum
-            // 
-            this.picAlbum.Image = global::Reproductor_de_Musica.Properties.Resources.disco;
-            this.picAlbum.Location = new System.Drawing.Point(5, 19);
-            this.picAlbum.Name = "picAlbum";
-            this.picAlbum.Size = new System.Drawing.Size(66, 66);
-            this.picAlbum.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picAlbum.TabIndex = 0;
-            this.picAlbum.TabStop = false;
-            this.picAlbum.Visible = false;
-            // 
             // panelVol
             // 
             this.panelVol.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panelVol.Controls.Add(this.trkVolumen);
             this.panelVol.Controls.Add(this.lblVolumen);
-            this.panelVol.Location = new System.Drawing.Point(790, 22);
+            this.panelVol.Location = new System.Drawing.Point(790, 30);
             this.panelVol.Name = "panelVol";
             this.panelVol.Size = new System.Drawing.Size(120, 67);
             this.panelVol.TabIndex = 18;
@@ -422,6 +353,8 @@ namespace Reproductor_de_Musica
             this.trkVolumen.Name = "trkVolumen";
             this.trkVolumen.Size = new System.Drawing.Size(101, 45);
             this.trkVolumen.TabIndex = 15;
+            this.trkVolumen.TabStop = false;
+            this.trkVolumen.TickStyle = System.Windows.Forms.TickStyle.None;
             this.trkVolumen.Scroll += new System.EventHandler(this.trkVolumen_Scroll);
             // 
             // lblVolumen
@@ -454,7 +387,7 @@ namespace Reproductor_de_Musica
             // 
             this.lblTiempoActual.AutoSize = true;
             this.lblTiempoActual.ForeColor = System.Drawing.Color.White;
-            this.lblTiempoActual.Location = new System.Drawing.Point(2, 47);
+            this.lblTiempoActual.Location = new System.Drawing.Point(2, 52);
             this.lblTiempoActual.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTiempoActual.Name = "lblTiempoActual";
             this.lblTiempoActual.Size = new System.Drawing.Size(35, 13);
@@ -465,11 +398,52 @@ namespace Reproductor_de_Musica
             // 
             this.trackBarProgreso.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(17)))), ((int)(((byte)(23)))));
             this.trackBarProgreso.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.trackBarProgreso.Location = new System.Drawing.Point(41, 47);
+            this.trackBarProgreso.Location = new System.Drawing.Point(41, 52);
             this.trackBarProgreso.Margin = new System.Windows.Forms.Padding(2);
             this.trackBarProgreso.Name = "trackBarProgreso";
             this.trackBarProgreso.Size = new System.Drawing.Size(395, 45);
             this.trackBarProgreso.TabIndex = 5;
+            this.trackBarProgreso.TabStop = false;
+            this.trackBarProgreso.TickStyle = System.Windows.Forms.TickStyle.None;
+            // 
+            // lblDuracion
+            // 
+            this.lblDuracion.AutoSize = true;
+            this.lblDuracion.ForeColor = System.Drawing.Color.White;
+            this.lblDuracion.Location = new System.Drawing.Point(440, 52);
+            this.lblDuracion.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblDuracion.Name = "lblDuracion";
+            this.lblDuracion.Size = new System.Drawing.Size(35, 13);
+            this.lblDuracion.TabIndex = 11;
+            this.lblDuracion.Text = "label2";
+            // 
+            // btnrayitas
+            // 
+            this.btnrayitas.BackColor = System.Drawing.Color.Transparent;
+            this.btnrayitas.BackgroundImage = global::Reproductor_de_Musica.Properties.Resources.menu;
+            this.btnrayitas.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnrayitas.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnrayitas.FlatAppearance.BorderSize = 0;
+            this.btnrayitas.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.btnrayitas.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnrayitas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnrayitas.Location = new System.Drawing.Point(3, 3);
+            this.btnrayitas.Name = "btnrayitas";
+            this.btnrayitas.Size = new System.Drawing.Size(40, 48);
+            this.btnrayitas.TabIndex = 8;
+            this.btnrayitas.UseVisualStyleBackColor = false;
+            this.btnrayitas.Click += new System.EventHandler(this.btnrayitas_Click);
+            // 
+            // picAlbum
+            // 
+            this.picAlbum.Image = global::Reproductor_de_Musica.Properties.Resources.disco;
+            this.picAlbum.Location = new System.Drawing.Point(5, 19);
+            this.picAlbum.Name = "picAlbum";
+            this.picAlbum.Size = new System.Drawing.Size(66, 66);
+            this.picAlbum.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picAlbum.TabIndex = 0;
+            this.picAlbum.TabStop = false;
+            this.picAlbum.Visible = false;
             // 
             // btnAnterior
             // 
@@ -484,24 +458,13 @@ namespace Reproductor_de_Musica
             this.btnAnterior.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAnterior.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAnterior.ForeColor = System.Drawing.Color.White;
-            this.btnAnterior.Location = new System.Drawing.Point(166, 5);
+            this.btnAnterior.Location = new System.Drawing.Point(166, 7);
             this.btnAnterior.Margin = new System.Windows.Forms.Padding(2);
             this.btnAnterior.Name = "btnAnterior";
             this.btnAnterior.Size = new System.Drawing.Size(40, 40);
             this.btnAnterior.TabIndex = 14;
             this.btnAnterior.UseVisualStyleBackColor = false;
             this.btnAnterior.Click += new System.EventHandler(this.btnAnterior_Click);
-            // 
-            // lblDuracion
-            // 
-            this.lblDuracion.AutoSize = true;
-            this.lblDuracion.ForeColor = System.Drawing.Color.White;
-            this.lblDuracion.Location = new System.Drawing.Point(440, 47);
-            this.lblDuracion.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblDuracion.Name = "lblDuracion";
-            this.lblDuracion.Size = new System.Drawing.Size(35, 13);
-            this.lblDuracion.TabIndex = 11;
-            this.lblDuracion.Text = "label2";
             // 
             // btnSiguiente
             // 
@@ -516,7 +479,7 @@ namespace Reproductor_de_Musica
             this.btnSiguiente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSiguiente.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSiguiente.ForeColor = System.Drawing.Color.White;
-            this.btnSiguiente.Location = new System.Drawing.Point(271, 5);
+            this.btnSiguiente.Location = new System.Drawing.Point(271, 7);
             this.btnSiguiente.Margin = new System.Windows.Forms.Padding(0);
             this.btnSiguiente.Name = "btnSiguiente";
             this.btnSiguiente.Size = new System.Drawing.Size(40, 40);
@@ -536,7 +499,7 @@ namespace Reproductor_de_Musica
             this.btnPlayPause.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPlayPause.Font = new System.Drawing.Font("Segoe UI", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPlayPause.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(17)))), ((int)(((byte)(23)))));
-            this.btnPlayPause.Location = new System.Drawing.Point(219, 7);
+            this.btnPlayPause.Location = new System.Drawing.Point(219, 9);
             this.btnPlayPause.Margin = new System.Windows.Forms.Padding(0);
             this.btnPlayPause.Name = "btnPlayPause";
             this.btnPlayPause.Size = new System.Drawing.Size(40, 38);
@@ -566,19 +529,18 @@ namespace Reproductor_de_Musica
             this.flowLayoutPanel1.ResumeLayout(false);
             this.psubmenu.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dvgCanciones)).EndInit();
             this.panelTitulo.ResumeLayout(false);
             this.panelTitulo.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panelHoy.ResumeLayout(false);
             this.panelHoy.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picAlbum)).EndInit();
             this.panelVol.ResumeLayout(false);
             this.panelVol.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trkVolumen)).EndInit();
             this.panelRep.ResumeLayout(false);
             this.panelRep.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarProgreso)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picAlbum)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -587,7 +549,6 @@ namespace Reproductor_de_Musica
         private System.Windows.Forms.Timer timerProgreso;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.DataGridView dvgCanciones;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label lblVolumen;
         private System.Windows.Forms.TrackBar trkVolumen;
@@ -615,6 +576,7 @@ namespace Reproductor_de_Musica
         private Label lblName;
         private Panel panelTitulo;
         private Label lblTitulo;
+        private Panel panelContenido;
     }
 }
 

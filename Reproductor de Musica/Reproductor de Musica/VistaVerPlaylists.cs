@@ -7,16 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Drawing;
 
 namespace Reproductor_de_Musica
 {
-    public partial class FormVerPlaylist : Form
+    public partial class VistaVerPlaylists : UserControl
     {
-        public FormVerPlaylist()
+        public VistaVerPlaylists()
         {
+            InitializeComponent();
             CargarYDibujarPlaylists();
         }
+
         private void CargarYDibujarPlaylists()
         {
             try
@@ -56,7 +57,7 @@ namespace Reproductor_de_Musica
                     btnRectangulo.FlatStyle = FlatStyle.Flat;
                     btnRectangulo.FlatAppearance.BorderSize = 0;
 
-                    
+
                     btnRectangulo.Click += (playlistBtn, eBtn) =>
                     {
                         Playlist1 seleccionada = (Playlist1)((Button)playlistBtn).Tag;
@@ -65,13 +66,13 @@ namespace Reproductor_de_Musica
                     };
 
                     // Añadimos el botón al formulario activo
-                    this.Controls.Add(btnRectangulo);  
+                    this.Controls.Add(btnRectangulo);
                     x += 200;
                     columnas++;
                     if (columnas % 3 == 0)
                     {
-                        x = xInicial; 
-                        y += 100;     
+                        x = xInicial;
+                        y += 100;
                     }
                     actual = actual.Siguiente;
                 }
