@@ -332,7 +332,13 @@ namespace Reproductor_de_Musica
             dvgCanciones.Columns.Add(new DataGridViewTextBoxColumn { Name = "Nombre", DataPropertyName = "Nombre", HeaderText = "Canción", Width = 200 });
             dvgCanciones.Columns.Add(new DataGridViewTextBoxColumn { Name = "Artista", DataPropertyName = "Artista", HeaderText = "Artista", Width = 150 });
             dvgCanciones.Columns.Add(new DataGridViewTextBoxColumn { Name = "RutaArchivo", DataPropertyName = "RutaArchivo", Visible = false });
-            dvgCanciones.Columns.Add(new DataGridViewTextBoxColumn { Name = "Duracion", DataPropertyName = "Duracion", HeaderText = "Duración", Width = 80 });
+            dvgCanciones.Columns.Add(new DataGridViewTextBoxColumn { Name = "Duracion", DataPropertyName = "Duracion", HeaderText = "Duración", Width = 80});
+
+            //Se deshabilita la ordenación de la columna al dar doble clic al encabezado
+            dvgCanciones.Columns["Id"].SortMode = DataGridViewColumnSortMode.NotSortable;
+            dvgCanciones.Columns["Nombre"].SortMode = DataGridViewColumnSortMode.NotSortable;
+            dvgCanciones.Columns["Artista"].SortMode = DataGridViewColumnSortMode.NotSortable;
+            dvgCanciones.Columns["Duracion"].SortMode = DataGridViewColumnSortMode.NotSortable;
         }
 
         private Cancion ObtenerCancionSeleccionada()
