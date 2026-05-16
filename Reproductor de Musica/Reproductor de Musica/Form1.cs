@@ -36,18 +36,8 @@ namespace Reproductor_de_Musica
             // Crear reproductor
             reproductor = new Reproductor(biblioteca);
 
-            // Crear vista
-            vistaCanciones = new VistaCanciones(biblioteca);
-
-            vistaCanciones.Dock = DockStyle.Fill;
-
-            // Agregar al panel
-            panelContenido.Controls.Clear();
-            panelContenido.Controls.Add(vistaCanciones);
-
-            // Eventos
-            vistaCanciones.CancionSeleccionada += ReproducirDesdeVista;
-            reproductor.OnCancionCambiada += vistaCanciones.SeleccionarEnGrid;
+            // Mostrar vista de canciones con la biblioteca al iniciar
+            MostrarVistaCanciones(biblioteca, "Biblioteca");
 
             //Inicializacion y configuracion del contro del volumen
             TrackBar trk = panelVol.Controls["trkVolumen"] as TrackBar;
@@ -88,7 +78,7 @@ namespace Reproductor_de_Musica
             btnPlayPause.Region = new Region(path);
 
             //Agrega margen al botón de la biblioteca para separarlo del contenido superior
-            btnBiblio.Margin = new Padding(3,45,3,3);
+            btnBiblio.Margin = new Padding(3, 45, 3, 3);
 
             //Centra el panel de reproducción dentro del panel3
             panelRep.Left = (panel3.Width - panelRep.Width) / 2;
@@ -176,7 +166,7 @@ namespace Reproductor_de_Musica
             TrackBar trk = sender as TrackBar;
             Label lbl = panelVol.Controls["lblVolumen"] as Label;
 
-            int volumenReal = trk.Value;  
+            int volumenReal = trk.Value;
             reproductor.CambiarVolumen(volumenReal);
 
             if (lbl != null)
@@ -186,6 +176,48 @@ namespace Reproductor_de_Musica
         {
             //al darle click al boton de las rayitas, se muestra o se oculta el submenu
             psubmenu.Visible = !psubmenu.Visible;
+        }
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DialogResult resp = MessageBox.Show("¿Estás seguro que deseas salir?", "Confirmar Salida", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (resp == DialogResult.No)
+                e.Cancel = true;
+        }
+
+        private void btnInfo_Click(object sender, EventArgs e)
+        {
+            Form info = new FormInfo();
+            info.ShowDialog();
+        }
+
+        private void btnCrearPlaylist_Click(object sender, EventArgs e)
+        {
+            FormCrearPlaylist ventanaCrear = new FormCrearPlaylist();
+            DialogResult resultado = ventanaCrear.ShowDialog();
+            // Si en este punto se guardo con exito en la playlist, se manda directo a verlas.
+            if (resultado == DialogResult.OK)
+            {
+                btnverplaylist_Click(sender, e);
+            }
+        }
+
+        private void btnverplaylist_Click(object sender, EventArgs e)
+        {
+            //Se crea la vista de ver playlists y se muestra en el panel de contenido, reemplazando a la vista de canciones.
+            VistaVerPlaylists vistaPlaylists = new VistaVerPlaylists();
+            vistaPlaylists.Dock = DockStyle.Fill;
+
+            // Agregar al panel
+            panelContenido.Controls.Clear();
+            panelContenido.Controls.Add(vistaPlaylists);
+
+            lblTitulo.Text = "Mis Playlists";
+        }
+
+        private void btnBiblio_Click(object sender, EventArgs e)
+        {
+            MostrarVistaCanciones(biblioteca, "Biblioteca");
         }
 
         /*////////////////////////////////////////////////////////////////////////////////////
@@ -278,36 +310,22 @@ namespace Reproductor_de_Musica
             // imagen genérica
             picAlbum.Image = Properties.Resources.disco;
         }
-
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void MostrarVistaCanciones(Playlist1 playlist, string titulo) 
         {
-            DialogResult resp = MessageBox.Show("¿Estás seguro que deseas salir?", "Confirmar Salida" ,MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            //Se crea la vista de canciones con playlist seleccionada
+            vistaCanciones = new VistaCanciones(playlist);
+            vistaCanciones.Dock = DockStyle.Fill;
 
-            if (resp == DialogResult.No)
-                e.Cancel = true;
-        }
+            // Agregar al panel de contenido
+            panelContenido.Controls.Clear();
+            panelContenido.Controls.Add(vistaCanciones);
 
-        private void btnInfo_Click(object sender, EventArgs e)
-        {
-            Form info = new FormInfo();
-            info.ShowDialog();
-        }
+            //Se enlazan los eventos para que al seleccionar una canción se reproduzca y para que al cambiar la canción desde el reproductor se seleccione en la vista
+            vistaCanciones.CancionSeleccionada += ReproducirDesdeVista;
+            reproductor.OnCancionCambiada += vistaCanciones.SeleccionarEnGrid;
 
-        private void btnCrearPlaylist_Click(object sender, EventArgs e)
-        {
-            FormCrearPlaylist ventanaCrear = new FormCrearPlaylist();
-            DialogResult resultado = ventanaCrear.ShowDialog();
-            // Si en este punto se guardo con exito en la playlist, se manda directo a verlas.
-            if (resultado == DialogResult.OK)
-            {
-                btnverplaylist_Click(sender, e);
-            }
-        }
-
-        private void btnverplaylist_Click(object sender, EventArgs e)
-        {
-            FormVerPlaylist ventanaVer = new FormVerPlaylist();
-            ventanaVer.ShowDialog();
+            //Se actualiza el título del panelTitulo
+            lblTitulo.Text = titulo;
         }
     }
 }

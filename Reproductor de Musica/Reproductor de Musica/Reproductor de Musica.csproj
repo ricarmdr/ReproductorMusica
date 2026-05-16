@@ -213,12 +213,6 @@
     <Compile Include="FormInfo.Designer.cs">
       <DependentUpon>FormInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormVerPlaylist.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormVerPlaylist.Designer.cs">
-      <DependentUpon>FormVerPlaylist.cs</DependentUpon>
-    </Compile>
     <Compile Include="GestorBaseDatos.cs" />
     <Compile Include="Historial.cs" />
     <Compile Include="NodoCancion.cs" />
@@ -231,6 +225,12 @@
     </Compile>
     <Compile Include="VistaCanciones.Designer.cs">
       <DependentUpon>VistaCanciones.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VistaVerPlaylists.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="VistaVerPlaylists.Designer.cs">
+      <DependentUpon>VistaVerPlaylists.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="AgregarCancion.resx">
       <DependentUpon>AgregarCancion.cs</DependentUpon>
@@ -247,9 +247,6 @@
     <EmbeddedResource Include="FormInfo.resx">
       <DependentUpon>FormInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormVerPlaylist.resx">
-      <DependentUpon>FormVerPlaylist.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -262,6 +259,9 @@
     </Compile>
     <EmbeddedResource Include="VistaCanciones.resx">
       <DependentUpon>VistaCanciones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VistaVerPlaylists.resx">
+      <DependentUpon>VistaVerPlaylists.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
