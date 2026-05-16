@@ -15,6 +15,7 @@ namespace Reproductor_de_Musica
     {
         public FormVerPlaylist()
         {
+            InitializeComponent();
             CargarYDibujarPlaylists();
         }
         private void CargarYDibujarPlaylists()

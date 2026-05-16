@@ -20,6 +20,7 @@ namespace Reproductor_de_Musica
         Reproductor reproductor;
         NodoCancion actual;
         private bool _scrubbing = false;
+        private VistaCanciones vistaCanciones;
 
         public Form1()
         {
@@ -29,16 +30,24 @@ namespace Reproductor_de_Musica
 
         private void Form1_Load_1(object sender, EventArgs e)
         {
-            //Biblioteca general
+            // Biblioteca
             biblioteca = ConexionGlobal.Instancia.ObtenerCancion();
-            //Configurar y cargar dgv con las cnaciones
-            ConfigurarColumnasDGV();
-            CargarDataGrid();
-            dvgCanciones.ClearSelection();
 
-            //Inicializacion del reproductor
+            // Crear reproductor
             reproductor = new Reproductor(biblioteca);
-            reproductor.OnCancionCambiada += SeleccionarEnGrid;
+
+            // Crear vista
+            vistaCanciones = new VistaCanciones(biblioteca);
+
+            vistaCanciones.Dock = DockStyle.Fill;
+
+            // Agregar al panel
+            panelContenido.Controls.Clear();
+            panelContenido.Controls.Add(vistaCanciones);
+
+            // Eventos
+            vistaCanciones.CancionSeleccionada += ReproducirDesdeVista;
+            reproductor.OnCancionCambiada += vistaCanciones.SeleccionarEnGrid;
 
             //Inicializacion y configuracion del contro del volumen
             TrackBar trk = panelVol.Controls["trkVolumen"] as TrackBar;
@@ -111,23 +120,6 @@ namespace Reproductor_de_Musica
                 }
             }
         }
-
-        //Al darle clic a la fila de la cancion, se reproduce esa cancion
-        private void dvgCanciones_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            // Evita que falle si hacen click en encabezados
-            if (e.RowIndex < 0) return;
-
-            Cancion c = ObtenerCancionSeleccionada();
-
-            if (c == null) return;
-
-            reproductor.ReproducirCancion(c);
-
-            MostrarCancionActual(c);
-            ActualizarBotonPlayPause();
-        }
-
         private void btnPlayPause_Click(object sender, EventArgs e)
         {
             if (reproductor.EstadoReproduccion == PlaybackState.Playing)
@@ -136,7 +128,7 @@ namespace Reproductor_de_Musica
             }
             else
             {
-                Cancion c = ObtenerCancionSeleccionada();
+                Cancion c = vistaCanciones.ObtenerCancionSeleccionada();
 
                 if (c == null)
                 {
@@ -195,17 +187,6 @@ namespace Reproductor_de_Musica
             //al darle click al boton de las rayitas, se muestra o se oculta el submenu
             psubmenu.Visible = !psubmenu.Visible;
         }
-        private void dvgCanciones_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-                dvgCanciones.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(35, 35, 35);
-        }
-
-        private void dvgCanciones_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-                dvgCanciones.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(18, 18, 18);
-        }
 
         /*////////////////////////////////////////////////////////////////////////////////////
                                         METODOS Y FUNCIONES
@@ -258,7 +239,7 @@ namespace Reproductor_de_Musica
 
                 MessageBox.Show("Canción agregada correctamente");
 
-                CargarDataGrid();
+                vistaCanciones.CargarDataGrid();
             }
             catch (Exception ex)
             {
@@ -266,54 +247,13 @@ namespace Reproductor_de_Musica
             }
         }
 
-        public void CargarDataGrid()
+        private void ReproducirDesdeVista(Cancion c)
         {
-            DataTable tabla = new DataTable();
-            tabla.Columns.Add("Id", typeof(int));
-            tabla.Columns.Add("Nombre", typeof(string));
-            tabla.Columns.Add("Artista", typeof(string));
-            tabla.Columns.Add("RutaArchivo", typeof(string));
-            tabla.Columns.Add("Duracion", typeof(string));
+            reproductor.ReproducirCancion(c);
 
-            // Usa biblioteca directamente, no vuelvas a consultar la BD
-            NodoCancion temp = biblioteca.inicio;
-            while (temp != null)
-            {
-                // Formato correcto para TimeSpan
-                string duracionTexto = string.Format("{0}:{1:D2}",
-                    (int)temp.Dato.Duracion.TotalMinutes,
-                    temp.Dato.Duracion.Seconds);
+            MostrarCancionActual(c);
 
-                tabla.Rows.Add(
-                    temp.Dato.Id,
-                    temp.Dato.Nombre,
-                    temp.Dato.Artista,
-                    temp.Dato.RutaArchivo,
-                    duracionTexto
-                );
-                temp = temp.Siguiente;
-            }
-
-            dvgCanciones.DataSource = tabla;
-        }
-        public void SeleccionarEnGrid(int idCancion)
-        {
-            if (dvgCanciones.InvokeRequired)
-            {
-                dvgCanciones.Invoke((Action)(() => SeleccionarEnGrid(idCancion)));
-                return;
-            }
-
-            foreach (DataGridViewRow row in dvgCanciones.Rows)
-            {
-                if (row.Cells["Id"].Value != null && Convert.ToInt32(row.Cells["Id"].Value) == idCancion)
-                {
-                    dvgCanciones.ClearSelection();
-                    row.Selected = true;
-                    dvgCanciones.FirstDisplayedScrollingRowIndex = row.Index;
-                    break;
-                }
-            }
+            ActualizarBotonPlayPause();
         }
         private void ActualizarBotonPlayPause()
         {
@@ -321,43 +261,6 @@ namespace Reproductor_de_Musica
                 btnPlayPause.BackgroundImage = Properties.Resources.pausa;
             else
                 btnPlayPause.BackgroundImage = Properties.Resources.play;
-        }
-        private void ConfigurarColumnasDGV()
-        {
-            dvgCanciones.AutoGenerateColumns = false;
-            dvgCanciones.AllowUserToAddRows = false;
-            dvgCanciones.Columns.Clear();
-
-            dvgCanciones.Columns.Add(new DataGridViewTextBoxColumn { Name = "Id", DataPropertyName = "Id", Visible = false });
-            dvgCanciones.Columns.Add(new DataGridViewTextBoxColumn { Name = "Nombre", DataPropertyName = "Nombre", HeaderText = "Canción", Width = 200 });
-            dvgCanciones.Columns.Add(new DataGridViewTextBoxColumn { Name = "Artista", DataPropertyName = "Artista", HeaderText = "Artista", Width = 150 });
-            dvgCanciones.Columns.Add(new DataGridViewTextBoxColumn { Name = "RutaArchivo", DataPropertyName = "RutaArchivo", Visible = false });
-            dvgCanciones.Columns.Add(new DataGridViewTextBoxColumn { Name = "Duracion", DataPropertyName = "Duracion", HeaderText = "Duración", Width = 80});
-
-            //Se deshabilita la ordenación de la columna al dar doble clic al encabezado
-            dvgCanciones.Columns["Id"].SortMode = DataGridViewColumnSortMode.NotSortable;
-            dvgCanciones.Columns["Nombre"].SortMode = DataGridViewColumnSortMode.NotSortable;
-            dvgCanciones.Columns["Artista"].SortMode = DataGridViewColumnSortMode.NotSortable;
-            dvgCanciones.Columns["Duracion"].SortMode = DataGridViewColumnSortMode.NotSortable;
-        }
-
-        private Cancion ObtenerCancionSeleccionada()
-        {
-            if (dvgCanciones.CurrentRow == null) return null;
-
-            DataRowView fila = (DataRowView)dvgCanciones.CurrentRow.DataBoundItem;
-            if (fila == null) return null;
-
-            TimeSpan duracion = TimeSpan.Zero;
-            TimeSpan.TryParse("00:" + fila["Duracion"].ToString(), out duracion);
-
-            return new Cancion(
-                Convert.ToInt32(fila["Id"]),
-                fila["Nombre"].ToString(),
-                fila["Artista"].ToString(),
-                fila["RutaArchivo"].ToString(),
-                duracion
-            );
         }
 
         // Muestra la información de la canción actual en el panel de reproducción
