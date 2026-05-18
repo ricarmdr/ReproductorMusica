@@ -16,7 +16,7 @@ namespace Reproductor_de_Musica
 {
     public partial class Form1 : Form
     {
-        Playlist1 biblioteca = new Playlist1("Biblioteca");
+        Playlist1 biblioteca = new Playlist1(0, "Biblioteca");
         Reproductor reproductor;
         NodoCancion actual;
         private bool _scrubbing = false;
@@ -208,11 +208,28 @@ namespace Reproductor_de_Musica
             VistaVerPlaylists vistaPlaylists = new VistaVerPlaylists();
             vistaPlaylists.Dock = DockStyle.Fill;
 
+            vistaPlaylists.PlaylistSeleccionada += AbrirPlaylist;
+
             // Agregar al panel
             panelContenido.Controls.Clear();
             panelContenido.Controls.Add(vistaPlaylists);
 
             lblTitulo.Text = "Mis Playlists";
+        }
+
+        //METODO PARA ABRIR PLAYLIST CON SUS CANCIONES
+        private void AbrirPlaylist(Playlist1 playlist)
+        {
+            Playlist1 playlistCompleta =
+                ConexionGlobal.Instancia.ObtenerPlaylistConCanciones(
+                    playlist.Id,
+                    playlist.nombre
+                );
+
+            MostrarVistaCanciones(
+                playlistCompleta,
+                playlist.nombre
+            );
         }
 
         private void btnBiblio_Click(object sender, EventArgs e)
@@ -312,6 +329,13 @@ namespace Reproductor_de_Musica
         }
         private void MostrarVistaCanciones(Playlist1 playlist, string titulo) 
         {
+            /* Si ya hay una vista de canciones, se desenlazan los eventos para evitar problemas 
+               al cambiar de playlist y que no se creen multiples suscripciones al mismo evento */
+            if (vistaCanciones != null)
+            {
+                reproductor.OnCancionCambiada -= vistaCanciones.SeleccionarEnGrid;
+            }
+
             //Se crea la vista de canciones con playlist seleccionada
             vistaCanciones = new VistaCanciones(playlist);
             vistaCanciones.Dock = DockStyle.Fill;
@@ -326,6 +350,35 @@ namespace Reproductor_de_Musica
 
             //Se actualiza el título del panelTitulo
             lblTitulo.Text = titulo;
+        }
+
+        private void btnAgregarPlaylist_Click(object sender, EventArgs e)
+        {
+            Cancion c = vistaCanciones.ObtenerCancionSeleccionada();
+
+            if (c == null)
+            {
+                MessageBox.Show("Selecciona una canción");
+                return;
+            }
+
+            FormSeleccionPlaylist frm =
+                new FormSeleccionPlaylist();
+
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                Playlist1 playlist =
+                    frm.PlaylistSeleccionada;
+
+                ConexionGlobal.Instancia.AgregarCancionPlaylist(
+                    c.Id,
+                    playlist.Id
+                );
+
+                MessageBox.Show(
+                    "Canción agregada a la playlist"
+                );
+            }
         }
     }
 }

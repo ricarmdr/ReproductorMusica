@@ -28,11 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dvgCanciones = new System.Windows.Forms.DataGridView();
+            this.agregarAPlaylistToolStripMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.agregarAPlaylistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.eliminarDePlaylistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dvgCanciones)).BeginInit();
+            this.agregarAPlaylistToolStripMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // dvgCanciones
@@ -54,6 +59,7 @@
             this.dvgCanciones.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dvgCanciones.ColumnHeadersHeight = 40;
             this.dvgCanciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dvgCanciones.ContextMenuStrip = this.agregarAPlaylistToolStripMenu;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -79,8 +85,37 @@
             this.dvgCanciones.Size = new System.Drawing.Size(695, 410);
             this.dvgCanciones.TabIndex = 2;
             this.dvgCanciones.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dvgCanciones_CellClick);
+            this.dvgCanciones.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dvgCanciones_CellMouseDown);
             this.dvgCanciones.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dvgCanciones_CellMouseEnter);
             this.dvgCanciones.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dvgCanciones_CellMouseLeave);
+            // 
+            // agregarAPlaylistToolStripMenu
+            // 
+            this.agregarAPlaylistToolStripMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.agregarAPlaylistToolStripMenuItem,
+            this.eliminarDePlaylistToolStripMenuItem});
+            this.agregarAPlaylistToolStripMenu.Name = "agregarAPlaylistToolStripMenu";
+            this.agregarAPlaylistToolStripMenu.Size = new System.Drawing.Size(196, 48);
+            // 
+            // agregarAPlaylistToolStripMenuItem
+            // 
+            this.agregarAPlaylistToolStripMenuItem.BackColor = System.Drawing.Color.Black;
+            this.agregarAPlaylistToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.agregarAPlaylistToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.agregarAPlaylistToolStripMenuItem.Name = "agregarAPlaylistToolStripMenuItem";
+            this.agregarAPlaylistToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.agregarAPlaylistToolStripMenuItem.Text = "+ Agregar a Playlist";
+            this.agregarAPlaylistToolStripMenuItem.Click += new System.EventHandler(this.agregarAPlaylistToolStripMenuItem_Click);
+            // 
+            // eliminarDePlaylistToolStripMenuItem
+            // 
+            this.eliminarDePlaylistToolStripMenuItem.BackColor = System.Drawing.Color.Black;
+            this.eliminarDePlaylistToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.eliminarDePlaylistToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(184)))), ((int)(((byte)(85)))));
+            this.eliminarDePlaylistToolStripMenuItem.Name = "eliminarDePlaylistToolStripMenuItem";
+            this.eliminarDePlaylistToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.eliminarDePlaylistToolStripMenuItem.Text = "X Eliminar de Playlist";
+            this.eliminarDePlaylistToolStripMenuItem.Click += new System.EventHandler(this.eliminarDePlaylistToolStripMenuItem_Click);
             // 
             // VistaCanciones
             // 
@@ -91,6 +126,7 @@
             this.Name = "VistaCanciones";
             this.Size = new System.Drawing.Size(695, 410);
             ((System.ComponentModel.ISupportInitialize)(this.dvgCanciones)).EndInit();
+            this.agregarAPlaylistToolStripMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -98,5 +134,8 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dvgCanciones;
+        private System.Windows.Forms.ContextMenuStrip agregarAPlaylistToolStripMenu;
+        private System.Windows.Forms.ToolStripMenuItem agregarAPlaylistToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem eliminarDePlaylistToolStripMenuItem;
     }
 }

@@ -8,12 +8,15 @@ namespace Reproductor_de_Musica
 {
     public class Playlist1
     {
+        public int Id { get; set; }
+
         public string nombre;
         public NodoCancion inicio;
         public NodoCancion final;
 
-        public Playlist1(string nombre)
+        public Playlist1(int id, string nombre)
         {
+            Id = id;
             this.nombre = nombre;
             inicio = null;
             final = null;
@@ -94,6 +97,11 @@ namespace Reproductor_de_Musica
             }
 
             return lista;
+        }
+
+        public override string ToString()
+        {
+            return nombre;
         }
     }
 }
