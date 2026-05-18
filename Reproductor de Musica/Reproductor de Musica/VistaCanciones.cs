@@ -45,7 +45,7 @@ namespace Reproductor_de_Musica
             dvgCanciones.Columns.Add(new DataGridViewTextBoxColumn { Name = "RutaArchivo", DataPropertyName = "RutaArchivo", Visible = false });
             dvgCanciones.Columns.Add(new DataGridViewTextBoxColumn { Name = "Duracion", DataPropertyName = "Duracion", HeaderText = "Duración", Width = 80 });
 
-            //Se deshabilita la ordenación de la columna al dar doble clic al encabezado
+            //Se deshabilita la ordenacion de la columna al dar doble clic al encabezado
             dvgCanciones.Columns["Id"].SortMode = DataGridViewColumnSortMode.NotSortable;
             dvgCanciones.Columns["Nombre"].SortMode = DataGridViewColumnSortMode.NotSortable;
             dvgCanciones.Columns["Artista"].SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -64,7 +64,7 @@ namespace Reproductor_de_Musica
             tabla.Columns.Add("RutaArchivo", typeof(string));
             tabla.Columns.Add("Duracion", typeof(string));
 
-            // Usa biblioteca directamente, no vuelve a consultar la BD
+            // Usa biblioteca directamente
             NodoCancion temp = playlistActual.inicio;
             while (temp != null)
             {

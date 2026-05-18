@@ -91,9 +91,9 @@ namespace Reproductor_de_Musica
                 // Ciclo while para recorrer los nodos
                 while (actual != null)
                 {
-                    // Creamos un Rectángulo plano es decir un boton
+                    // Se crea un rectangulo plano 
                     Button btnRectangulo = new Button();
-                    btnRectangulo.Text = actual.Dato.nombre; // Carga el nombre real de tu BD
+                    btnRectangulo.Text = actual.Dato.nombre; 
                     btnRectangulo.Tag = actual.Dato;
                     btnRectangulo.Size = new System.Drawing.Size(180, 80);
                     btnRectangulo.Location = new Point(x, y);
@@ -137,7 +137,7 @@ namespace Reproductor_de_Musica
             }
             catch (Exception ex)
             {
-                //seguridad por si la BD tira algún error
+                //seguridad por si la BD tira algun error
                 MessageBox.Show("Error al cargar las playlists desde SQL: " + ex.Message, "Error de Base de Datos");
             }
         }
