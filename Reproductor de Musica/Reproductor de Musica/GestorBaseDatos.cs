@@ -131,10 +131,7 @@ namespace Reproductor_de_Musica
 
                 while (reader.Read())
                 {
-                    Playlist1 p = new Playlist1(
-                        Convert.ToInt32(reader["idPlaylist"]),
-                        reader["nombrePlaylist"].ToString()
-                    );
+                    Playlist1 p = new Playlist1( Convert.ToInt32(reader["idPlaylist"]), reader["nombrePlaylist"].ToString() );
 
                     NodoPlaylist nuevo = new NodoPlaylist(p);
 
@@ -163,10 +160,7 @@ namespace Reproductor_de_Musica
             {
                 conn.Open();
 
-                string query = @"
-                SELECT C.*
-                FROM Cancion C
-                INNER JOIN PlaylistCancion PC
+                string query = @"SELECT C.* FROM Cancion C INNER JOIN PlaylistCancion PC
                     ON C.idCancion = PC.idCancion
                 WHERE PC.idPlaylist = @idPlaylist";
 
@@ -204,66 +198,84 @@ namespace Reproductor_de_Musica
         }
 
         //METODO PARA ELIMINAR CANCION DE LA PLAYLIST
-        public void EliminarCancionDePlaylist(
-            int idCancion,
-            int idPlaylist)
+        public void EliminarCancionDePlaylist(int idCancion, int idPlaylist)
         {
-            using (SqlConnection conn =
-                new SqlConnection(cadenaConexion))
+            using (SqlConnection conn = new SqlConnection(cadenaConexion))
             {
                 conn.Open();
 
-                string query = @"
-                        DELETE FROM PlaylistCancion
-                        WHERE idCancion = @cancion
-                        AND idPlaylist = @playlist";
+                string query = @"DELETE FROM PlaylistCancion WHERE idCancion = @cancion AND idPlaylist = @playlist";
 
-                SqlCommand cmd =
-                    new SqlCommand(query, conn);
+                SqlCommand cmd = new SqlCommand(query, conn);
 
-                cmd.Parameters.AddWithValue(
-                    "@cancion",
-                    idCancion);
-
-                cmd.Parameters.AddWithValue(
-                    "@playlist",
-                    idPlaylist);
+                cmd.Parameters.AddWithValue("@cancion", idCancion);
+                cmd.Parameters.AddWithValue("@playlist", idPlaylist);
 
                 cmd.ExecuteNonQuery();
             }
         }
 
         //metodo para evitar canciones duplicadas en una Playlists
-        public bool ExisteCancionEnPlaylist(
-                int idCancion,
-                int idPlaylist)
+        public bool ExisteCancionEnPlaylist(int idCancion, int idPlaylist)
         {
             using (SqlConnection conn =
                 new SqlConnection(cadenaConexion))
             {
                 conn.Open();
 
-                string query = @"
-                        SELECT COUNT(*)
-                        FROM PlaylistCancion
-                        WHERE idCancion = @cancion
-                        AND idPlaylist = @playlist";
+                string query = @"SELECT COUNT(*) FROM PlaylistCancion WHERE idCancion = @cancion AND idPlaylist = @playlist";
 
-                SqlCommand cmd =
-                    new SqlCommand(query, conn);
+                SqlCommand cmd = new SqlCommand(query, conn);
 
-                cmd.Parameters.AddWithValue(
-                    "@cancion",
-                    idCancion);
+                cmd.Parameters.AddWithValue("@cancion", idCancion);
+                cmd.Parameters.AddWithValue("@playlist", idPlaylist);
 
-                cmd.Parameters.AddWithValue(
-                    "@playlist",
-                    idPlaylist);
-
-                int cantidad =
-                    (int)cmd.ExecuteScalar();
+                int cantidad = (int)cmd.ExecuteScalar();
 
                 return cantidad > 0;
+            }
+        }
+
+        //Método para renombrar una playlist
+        public void RenombrarPlaylist(int idPlaylist, string nuevoNombre)
+        {
+            using (SqlConnection conn = new SqlConnection(cadenaConexion))
+            {
+                conn.Open();
+
+                string query = @"UPDATE Playlist SET nombrePlaylist = @nombre WHERE idPlaylist = @id";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                cmd.Parameters.AddWithValue("@nombre", nuevoNombre);
+                cmd.Parameters.AddWithValue("@id", idPlaylist);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        //Metodo para eliminar una playlist completa
+        public void EliminarPlaylist(int idPlaylist)
+        {
+            using (SqlConnection conn = new SqlConnection(cadenaConexion))
+            {
+                conn.Open();
+
+                // Primero se eliminan las relaciones en PlaylistCancion
+                string query1 = @"DELETE FROM PlaylistCancion WHERE idPlaylist = @id";
+
+                SqlCommand cmd1 = new SqlCommand(query1, conn);
+
+                cmd1.Parameters.AddWithValue("@id", idPlaylist);
+                cmd1.ExecuteNonQuery();
+
+                // Luego se elimina la playlist
+                string query2 = @"DELETE FROM Playlist WHERE idPlaylist = @id";
+
+                SqlCommand cmd2 = new SqlCommand(query2, conn);
+
+                cmd2.Parameters.AddWithValue("@id", idPlaylist);
+                cmd2.ExecuteNonQuery();
             }
         }
 
