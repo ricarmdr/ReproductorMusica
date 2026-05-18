@@ -16,37 +16,6 @@ namespace Reproductor_de_Musica
             nuevo.Siguiente = Cima;
             Cima = nuevo;
         }
-        public NodoCancion Pop()
-        {
-            if (Cima == null)
-            {
-                Console.WriteLine("Historial vacio");
-                return null;
-            }
-            NodoCancion temp = Cima;
-            Cima = Cima.Siguiente;
-            return temp;
-        }
-        public NodoCancion Peek()
-        {
-            return Cima;
-        }
-        public bool EstaVacio()
-        {
-            return Cima == null;
-        }
-        public void MostrarHistorial()
-        {
-            NodoCancion actual = Cima;
-            Console.WriteLine("=== Historial ===");
-            while (actual != null)
-            {
-                Console.WriteLine(actual.Dato.Nombre + " - " + actual.Dato.Artista);
-                actual = actual.Siguiente; }
-        }
-        public void LimpiarHistorial()
-        {
-            Cima = null;
-        }
+        
     }
     }

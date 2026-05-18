@@ -74,34 +74,10 @@ namespace Reproductor_de_Musica
             }
         }
 
-        public void MostrarCanciones()
-        {
-            NodoCancion actual = inicio;
-
-            while (actual != null)
-            {
-                Console.WriteLine("ID: " + actual.Dato.Id + " Nombre: " + actual.Dato.Nombre + " Artista: " + actual.Dato.Artista);
-                actual = actual.Siguiente;
-            }
-        }
-
-        public List<Cancion> ObtenerLista()
-        {
-            List<Cancion> lista = new List<Cancion>();
-            NodoCancion actual = inicio;
-
-            while (actual != null)
-            {
-                lista.Add(actual.Dato);
-                actual = actual.Siguiente;
-            }
-
-            return lista;
-        }
-
         public override string ToString()
         {
-            return nombre;
+            return this.nombre;
         }
+
     }
 }
