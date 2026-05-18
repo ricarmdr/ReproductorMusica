@@ -19,6 +19,13 @@ namespace Reproductor_de_Musica
         {
             InitializeComponent();
 
+            //ESTE IF ES PARA QUE EN LA BIBLIOTECA NO APAREZCA LA OPCION ELIMINAR 
+            //CANCION DE PLAYLIST
+            if (playlist.Id == 0)
+            {
+                eliminarDePlaylistToolStripMenuItem.Visible = false;
+            }
+
             this.playlistActual = playlist;
 
             ConfigurarColumnasDGV();
@@ -31,6 +38,7 @@ namespace Reproductor_de_Musica
             dvgCanciones.AllowUserToAddRows = false;
             dvgCanciones.Columns.Clear();
 
+            dvgCanciones.Columns.Add(new DataGridViewTextBoxColumn { Name = "No", DataPropertyName = "No", HeaderText = "No.", Width = 50 });
             dvgCanciones.Columns.Add(new DataGridViewTextBoxColumn { Name = "Id", DataPropertyName = "Id", Visible = false });
             dvgCanciones.Columns.Add(new DataGridViewTextBoxColumn { Name = "Nombre", DataPropertyName = "Nombre", HeaderText = "Canción", Width = 200 });
             dvgCanciones.Columns.Add(new DataGridViewTextBoxColumn { Name = "Artista", DataPropertyName = "Artista", HeaderText = "Artista", Width = 150 });
@@ -47,13 +55,16 @@ namespace Reproductor_de_Musica
         public void CargarDataGrid()
         {
             DataTable tabla = new DataTable();
+            int numero = 1;
+
+            tabla.Columns.Add("No", typeof(int));
             tabla.Columns.Add("Id", typeof(int));
             tabla.Columns.Add("Nombre", typeof(string));
             tabla.Columns.Add("Artista", typeof(string));
             tabla.Columns.Add("RutaArchivo", typeof(string));
             tabla.Columns.Add("Duracion", typeof(string));
 
-            // Usa biblioteca directamente, no vuelvas a consultar la BD
+            // Usa biblioteca directamente, no vuelve a consultar la BD
             NodoCancion temp = playlistActual.inicio;
             while (temp != null)
             {
@@ -63,12 +74,15 @@ namespace Reproductor_de_Musica
                     temp.Dato.Duracion.Seconds);
 
                 tabla.Rows.Add(
+                    numero,
                     temp.Dato.Id,
                     temp.Dato.Nombre,
                     temp.Dato.Artista,
                     temp.Dato.RutaArchivo,
                     duracionTexto
                 );
+
+                numero++;
                 temp = temp.Siguiente;
             }
 
@@ -136,6 +150,71 @@ namespace Reproductor_de_Musica
             if (c == null) return;
 
             CancionSeleccionada?.Invoke(c);
+        }
+
+        private void dvgCanciones_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.Button == MouseButtons.Right)
+            {
+                dvgCanciones.ClearSelection();
+                dvgCanciones.Rows[e.RowIndex].Selected = true;
+                dvgCanciones.CurrentCell =
+                dvgCanciones.Rows[e.RowIndex].Cells["Nombre"];
+            }
+        }
+
+        private void agregarAPlaylistToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Cancion c = ObtenerCancionSeleccionada();
+
+            if (c == null)
+            {
+                MessageBox.Show("Selecciona una canción");
+                return;
+            }
+
+            FormSeleccionPlaylist frm = new FormSeleccionPlaylist(playlistActual.Id);
+
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                Playlist1 playlist = frm.PlaylistSeleccionada;
+
+                bool existe = ConexionGlobal.Instancia.ExisteCancionEnPlaylist(c.Id, playlist.Id);
+
+                if (existe)
+                {
+                    MessageBox.Show("La canción ya existe en esta playlist");
+                    return;
+                }
+
+                ConexionGlobal.Instancia.AgregarCancionPlaylist(c.Id, playlist.Id);
+
+                MessageBox.Show("Canción agregada a playlist");
+            }
+        }
+
+        private void eliminarDePlaylistToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Cancion c = ObtenerCancionSeleccionada();
+
+            if (c == null)
+            {
+                MessageBox.Show("Selecciona una canción");
+                return;
+            }
+
+            DialogResult resp = MessageBox.Show("¿Eliminar canción de la playlist?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (resp == DialogResult.No)
+                return;
+
+            ConexionGlobal.Instancia.EliminarCancionDePlaylist(c.Id, playlistActual.Id);
+
+            playlistActual.EliminarCancion(c.Id);
+
+            CargarDataGrid();
+
+            MessageBox.Show("Canción eliminada de la playlist");
         }
     }
 }

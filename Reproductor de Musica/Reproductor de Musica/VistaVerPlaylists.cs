@@ -18,6 +18,8 @@ namespace Reproductor_de_Musica
             CargarYDibujarPlaylists();
         }
 
+        public event Action<Playlist1> PlaylistSeleccionada;
+
         private void CargarYDibujarPlaylists()
         {
             try
@@ -49,6 +51,7 @@ namespace Reproductor_de_Musica
                     // Creamos un Rectángulo plano es decir un boton
                     Button btnRectangulo = new Button();
                     btnRectangulo.Text = actual.Dato.nombre; // Carga el nombre real de tu BD
+                    btnRectangulo.Tag = actual.Dato;
                     btnRectangulo.Size = new System.Drawing.Size(180, 80);
                     btnRectangulo.Location = new Point(x, y);
                     btnRectangulo.BackColor = Color.FromArgb(0, 122, 204);
@@ -60,9 +63,10 @@ namespace Reproductor_de_Musica
 
                     btnRectangulo.Click += (playlistBtn, eBtn) =>
                     {
-                        Playlist1 seleccionada = (Playlist1)((Button)playlistBtn).Tag;
+                        Playlist1 seleccionada =
+                            (Playlist1)((Button)playlistBtn).Tag;
 
-                        MessageBox.Show("Abriendo playlist: " + seleccionada.nombre + "\n\nAqui se cargaran las canciones ", "Reproductor");
+                        PlaylistSeleccionada?.Invoke(seleccionada);
                     };
 
                     // Añadimos el botón al formulario activo

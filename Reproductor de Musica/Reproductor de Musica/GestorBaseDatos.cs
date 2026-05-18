@@ -72,7 +72,7 @@ namespace Reproductor_de_Musica
 
         public Playlist1 ObtenerCancion()
         {
-            Playlist1 lista = new Playlist1("Biblioteca");
+            Playlist1 lista = new Playlist1(0, "Biblioteca");
             using (SqlConnection conn = new SqlConnection(cadenaConexion))
             {
                 conn.Open();
@@ -132,6 +132,7 @@ namespace Reproductor_de_Musica
                 while (reader.Read())
                 {
                     Playlist1 p = new Playlist1(
+                        Convert.ToInt32(reader["idPlaylist"]),
                         reader["nombrePlaylist"].ToString()
                     );
 
@@ -151,6 +152,119 @@ namespace Reproductor_de_Musica
             }
 
             return inicio;
+        }
+
+        //METODO PARA CARGAR LAS CANCIONES EN LAS PLAYLST
+        public Playlist1 ObtenerPlaylistConCanciones(int idPlaylist, string nombrePlaylist)
+        {
+            Playlist1 playlist = new Playlist1(idPlaylist, nombrePlaylist);
+
+            using (SqlConnection conn = new SqlConnection(cadenaConexion))
+            {
+                conn.Open();
+
+                string query = @"
+                SELECT C.*
+                FROM Cancion C
+                INNER JOIN PlaylistCancion PC
+                    ON C.idCancion = PC.idCancion
+                WHERE PC.idPlaylist = @idPlaylist";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                cmd.Parameters.AddWithValue("@idPlaylist", idPlaylist);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    TimeSpan duracion = TimeSpan.Zero;
+
+                    if (reader["duracion"] != DBNull.Value)
+                    {
+                        string valor = reader["duracion"].ToString();
+                        TimeSpan.TryParse("00:" + valor, out duracion);
+                    }
+
+                    Cancion c = new Cancion(
+                        Convert.ToInt32(reader["idCancion"]),
+                        reader["nombre"].ToString(),
+                        reader["artista"].ToString(),
+                        reader["rutaArchivo"].ToString(),
+                        duracion
+                    );
+
+                    playlist.AgregarCancion(c);
+                }
+
+                reader.Close();
+            }
+
+            return playlist;
+        }
+
+        //METODO PARA ELIMINAR CANCION DE LA PLAYLIST
+        public void EliminarCancionDePlaylist(
+            int idCancion,
+            int idPlaylist)
+        {
+            using (SqlConnection conn =
+                new SqlConnection(cadenaConexion))
+            {
+                conn.Open();
+
+                string query = @"
+                        DELETE FROM PlaylistCancion
+                        WHERE idCancion = @cancion
+                        AND idPlaylist = @playlist";
+
+                SqlCommand cmd =
+                    new SqlCommand(query, conn);
+
+                cmd.Parameters.AddWithValue(
+                    "@cancion",
+                    idCancion);
+
+                cmd.Parameters.AddWithValue(
+                    "@playlist",
+                    idPlaylist);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        //metodo para evitar canciones duplicadas en una Playlists
+        public bool ExisteCancionEnPlaylist(
+                int idCancion,
+                int idPlaylist)
+        {
+            using (SqlConnection conn =
+                new SqlConnection(cadenaConexion))
+            {
+                conn.Open();
+
+                string query = @"
+                        SELECT COUNT(*)
+                        FROM PlaylistCancion
+                        WHERE idCancion = @cancion
+                        AND idPlaylist = @playlist";
+
+                SqlCommand cmd =
+                    new SqlCommand(query, conn);
+
+                cmd.Parameters.AddWithValue(
+                    "@cancion",
+                    idCancion);
+
+                cmd.Parameters.AddWithValue(
+                    "@playlist",
+                    idPlaylist);
+
+                int cantidad =
+                    (int)cmd.ExecuteScalar();
+
+                return cantidad > 0;
+            }
         }
 
     }
