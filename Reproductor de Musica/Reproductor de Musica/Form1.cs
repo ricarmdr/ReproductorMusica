@@ -35,6 +35,8 @@ namespace Reproductor_de_Musica
             // Crear reproductor
             reproductor = new Reproductor(biblioteca);
 
+            reproductor.OnCancionCambiada += ActualizarInfoCancion;
+
             // Mostrar vista de canciones con la biblioteca al iniciar
             MostrarVistaCanciones(biblioteca, "Biblioteca");
 
@@ -380,6 +382,24 @@ namespace Reproductor_de_Musica
                 MessageBox.Show(
                     "Canción agregada a la playlist"
                 );
+            }
+        }
+
+        //Metodo para actualizar la informacion de la cancion actual en el panel de reproduccion cada vez que se cambia de cancion
+        //desde el reproductor (siguiente/anterior) o se reproduce una nueva desde la vista de canciones
+        private void ActualizarInfoCancion(int idCancion)
+        {
+            NodoCancion actual = biblioteca.inicio;
+
+            while (actual != null)
+            {
+                if (actual.Dato.Id == idCancion)
+                {
+                    MostrarCancionActual(actual.Dato);
+                    return;
+                }
+
+                actual = actual.Siguiente;
             }
         }
     }

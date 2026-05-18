@@ -181,7 +181,7 @@ namespace Reproductor_de_Musica
         {
             if (audio != null && tiempo <= audio.TotalTime)
                 audio.CurrentTime = tiempo;
-        }
+        }   
 
         //Control de volumen 
 
