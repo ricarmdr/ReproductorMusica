@@ -86,7 +86,7 @@
             this.txtNombre.Enabled = false;
             this.txtNombre.ForeColor = System.Drawing.Color.White;
             this.txtNombre.Location = new System.Drawing.Point(31, 99);
-            this.txtNombre.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtNombre.Margin = new System.Windows.Forms.Padding(2);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(330, 20);
             this.txtNombre.TabIndex = 3;
@@ -98,7 +98,7 @@
             this.txtArtista.Enabled = false;
             this.txtArtista.ForeColor = System.Drawing.Color.White;
             this.txtArtista.Location = new System.Drawing.Point(31, 167);
-            this.txtArtista.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtArtista.Margin = new System.Windows.Forms.Padding(2);
             this.txtArtista.Name = "txtArtista";
             this.txtArtista.Size = new System.Drawing.Size(330, 20);
             this.txtArtista.TabIndex = 4;
@@ -111,7 +111,7 @@
             this.btnRuta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRuta.ForeColor = System.Drawing.Color.White;
             this.btnRuta.Location = new System.Drawing.Point(31, 241);
-            this.btnRuta.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnRuta.Margin = new System.Windows.Forms.Padding(2);
             this.btnRuta.Name = "btnRuta";
             this.btnRuta.Size = new System.Drawing.Size(126, 32);
             this.btnRuta.TabIndex = 5;
@@ -128,7 +128,7 @@
             this.btnAgregar.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAgregar.ForeColor = System.Drawing.Color.White;
             this.btnAgregar.Location = new System.Drawing.Point(221, 327);
-            this.btnAgregar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnAgregar.Margin = new System.Windows.Forms.Padding(2);
             this.btnAgregar.Name = "btnAgregar";
             this.btnAgregar.Size = new System.Drawing.Size(140, 38);
             this.btnAgregar.TabIndex = 6;
@@ -142,7 +142,7 @@
             this.txtRuta.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtRuta.ForeColor = System.Drawing.Color.White;
             this.txtRuta.Location = new System.Drawing.Point(186, 248);
-            this.txtRuta.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtRuta.Margin = new System.Windows.Forms.Padding(2);
             this.txtRuta.Name = "txtRuta";
             this.txtRuta.ReadOnly = true;
             this.txtRuta.Size = new System.Drawing.Size(175, 20);
@@ -157,7 +157,7 @@
             this.btnCancelar.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancelar.ForeColor = System.Drawing.Color.White;
             this.btnCancelar.Location = new System.Drawing.Point(30, 327);
-            this.btnCancelar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCancelar.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(140, 38);
             this.btnCancelar.TabIndex = 8;
@@ -192,8 +192,11 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "AgregarCancion";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AgregarCancion";
             this.ResumeLayout(false);
             this.PerformLayout();
