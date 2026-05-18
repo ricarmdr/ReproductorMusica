@@ -6,7 +6,7 @@ namespace Reproductor_de_Musica
 {
     public partial class FrmHistorial : Form
     {
-        // Constructor vacío
+        // Constructor vacio
         public FrmHistorial()
         {
             InitializeComponent();
@@ -43,7 +43,7 @@ namespace Reproductor_de_Musica
             }
         }
 
-        // Método para estilos y propiedades
+        // Metodo para estilos y propiedades
         private void ConfigurarGrid()
         { 
             //GENERAL
