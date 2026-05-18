@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.dgvHistorial = new System.Windows.Forms.DataGridView();
-            this.btnCerrar = new System.Windows.Forms.Button();
             this.Cancion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Artista = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnCerrar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHistorial)).BeginInit();
             this.SuspendLayout();
             // 
@@ -60,6 +60,22 @@
             this.dgvHistorial.Size = new System.Drawing.Size(452, 183);
             this.dgvHistorial.TabIndex = 1;
             // 
+            // Cancion
+            // 
+            this.Cancion.HeaderText = "Cancion";
+            this.Cancion.MinimumWidth = 8;
+            this.Cancion.Name = "Cancion";
+            this.Cancion.ReadOnly = true;
+            this.Cancion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Artista
+            // 
+            this.Artista.HeaderText = "Artista";
+            this.Artista.MinimumWidth = 8;
+            this.Artista.Name = "Artista";
+            this.Artista.ReadOnly = true;
+            this.Artista.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
             // btnCerrar
             // 
             this.btnCerrar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(185)))), ((int)(((byte)(84)))));
@@ -78,22 +94,6 @@
             this.btnCerrar.UseVisualStyleBackColor = false;
             this.btnCerrar.Click += new System.EventHandler(this.btnCerrar_Click);
             // 
-            // Cancion
-            // 
-            this.Cancion.HeaderText = "Cancion";
-            this.Cancion.MinimumWidth = 8;
-            this.Cancion.Name = "Cancion";
-            this.Cancion.ReadOnly = true;
-            this.Cancion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Artista
-            // 
-            this.Artista.HeaderText = "Artista";
-            this.Artista.MinimumWidth = 8;
-            this.Artista.Name = "Artista";
-            this.Artista.ReadOnly = true;
-            this.Artista.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
             // FrmHistorial
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -103,6 +103,7 @@
             this.Controls.Add(this.btnCerrar);
             this.Controls.Add(this.dgvHistorial);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmHistorial";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

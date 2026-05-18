@@ -102,6 +102,8 @@
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.label1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormSeleccionPlaylist";
             this.Text = "FormSeleccionPlaylist";
             this.Load += new System.EventHandler(this.FormSeleccionPlaylist_Load);
