@@ -12,7 +12,6 @@ namespace Reproductor_de_Musica
     public class Reproductor
     {
         private Playlist1 playlist;
-        private ColaReproduccion cola;
         private Historial historial;
 
         private NodoCancion actual;
@@ -39,9 +38,15 @@ namespace Reproductor_de_Musica
         public Reproductor(Playlist1 playlist)
         {
             this.playlist = playlist;
-            this.cola = new ColaReproduccion();
             this.historial = new Historial();
             this.actual = null;
+        }
+
+        public void CambiarPlaylist(Playlist1 nuevaPlaylist)
+        {
+            this.playlist = nuevaPlaylist;
+            if (actual != null)
+                actual = BuscarNodo(actual.Dato.Id);
         }
 
         //Metdo para reproducir una cancion
@@ -115,13 +120,7 @@ namespace Reproductor_de_Musica
      
         public void SiguienteCancion()
         {
-            // Prioridad: cola
-            if (!cola.EstaVacia())
-            {
-                Cancion siguiente = cola.Desencolar();
-                ReproducirCancion(siguiente);
-                return;
-            }
+            
 
             if (actual != null && actual.Siguiente != null)
             {

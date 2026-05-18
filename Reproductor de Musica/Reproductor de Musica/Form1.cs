@@ -18,7 +18,6 @@ namespace Reproductor_de_Musica
     {
         Playlist1 biblioteca = new Playlist1(0, "Biblioteca");
         Reproductor reproductor;
-        NodoCancion actual;
         private bool _scrubbing = false;
         private VistaCanciones vistaCanciones;
 
@@ -56,7 +55,7 @@ namespace Reproductor_de_Musica
             }
 
             if (lbl != null)
-                lbl.Text = "Vol: 100%";  // valor inicial correcto
+                lbl.Text = "Vol: 100%";  // valor inicial
 
             //Configuracion del timer y barra de reproduccion
             timerProgreso.Interval = 500;
@@ -312,7 +311,7 @@ namespace Reproductor_de_Musica
                 btnPlayPause.BackgroundImage = Properties.Resources.play;
         }
 
-        // Muestra la información de la canción actual en el panel de reproducción
+        // Muestra la informacion de la canción actual en el panel de reproducción
         private void MostrarCancionActual(Cancion c)
         {
             if (c == null) return;
@@ -327,14 +326,17 @@ namespace Reproductor_de_Musica
             // imagen genérica
             picAlbum.Image = Properties.Resources.disco;
         }
-        private void MostrarVistaCanciones(Playlist1 playlist, string titulo) 
+        private void MostrarVistaCanciones(Playlist1 playlist, string titulo)
         {
-            /* Si ya hay una vista de canciones, se desenlazan los eventos para evitar problemas 
+            /* Si ya hay una vista de canciones se desenlazan los eventos para evitar problemas 
                al cambiar de playlist y que no se creen multiples suscripciones al mismo evento */
             if (vistaCanciones != null)
             {
                 reproductor.OnCancionCambiada -= vistaCanciones.SeleccionarEnGrid;
             }
+
+            // Actualizar la playlist activa del reproductor para que siguiente/anterior naveguen dentro de esta playlist y no de la biblioteca
+            reproductor.CambiarPlaylist(playlist);
 
             //Se crea la vista de canciones con playlist seleccionada
             vistaCanciones = new VistaCanciones(playlist);
@@ -344,11 +346,11 @@ namespace Reproductor_de_Musica
             panelContenido.Controls.Clear();
             panelContenido.Controls.Add(vistaCanciones);
 
-            //Se enlazan los eventos para que al seleccionar una canción se reproduzca y para que al cambiar la canción desde el reproductor se seleccione en la vista
+            //Se enlazan los eventos para que al seleccionar una cancion se reproduzca y para que al cambiar la canción desde el reproductor se seleccione en la vista
             vistaCanciones.CancionSeleccionada += ReproducirDesdeVista;
             reproductor.OnCancionCambiada += vistaCanciones.SeleccionarEnGrid;
 
-            //Se actualiza el título del panelTitulo
+            //Se actualiza el titulo del panelTitulo
             lblTitulo.Text = titulo;
         }
 
