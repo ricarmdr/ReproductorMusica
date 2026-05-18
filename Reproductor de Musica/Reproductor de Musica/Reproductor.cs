@@ -34,6 +34,9 @@ namespace Reproductor_de_Musica
         // Volumen del audio (de 0 a 100)
         private float _volumenActual = 1.0f;
 
+        // Modo bucle desactivado por defecto
+        public bool ModoBucle { get; set; } = false;
+
         // Metodo Constructor
         public Reproductor(Playlist1 playlist)
         {
@@ -120,11 +123,13 @@ namespace Reproductor_de_Musica
      
         public void SiguienteCancion()
         {
-            
-
             if (actual != null && actual.Siguiente != null)
             {
                 ReproducirCancion(actual.Siguiente.Dato);
+            }
+            else if (ModoBucle && playlist.inicio != null) // Si estamos al final y el modo bucle está activado, volvemos al inicio
+            {
+                ReproducirCancion(playlist.inicio.Dato);
             }
         }
 

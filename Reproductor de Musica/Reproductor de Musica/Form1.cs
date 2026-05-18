@@ -87,7 +87,10 @@ namespace Reproductor_de_Musica
             panelHoy.Margin = new Padding(20, 0, 0, 0);
             panelHoy.Width = 300;
 
-            lblTitulo.Text = "Biblioteca";
+            lblTitulo.Text = "Biblioteca"; // Titulo inicial del panel de contenido
+
+            // Configuracion del boton de bucle (color gris: desactivado)
+            btnBucle.ForeColor = Color.FromArgb(70, 70, 70);
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
@@ -400,6 +403,22 @@ namespace Reproductor_de_Musica
                 }
 
                 actual = actual.Siguiente;
+            }
+        }
+
+        // Al hacer click en el boton de bucle, se activa o desactiva el modo bucle del reproductor
+        // y se cambia el color del boton para indicar su estado
+        private void btnBucle_Click(object sender, EventArgs e)
+        {
+            reproductor.ModoBucle = !reproductor.ModoBucle;
+
+            if (reproductor.ModoBucle)
+            {
+                btnBucle.ForeColor = Color.FromArgb(29, 185, 84);
+            }
+            else
+            {
+                btnBucle.ForeColor = Color.FromArgb(70, 70, 70);
             }
         }
     }
