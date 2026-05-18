@@ -105,6 +105,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormSeleccionPlaylist";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormSeleccionPlaylist";
             this.Load += new System.EventHandler(this.FormSeleccionPlaylist_Load);
             this.ResumeLayout(false);

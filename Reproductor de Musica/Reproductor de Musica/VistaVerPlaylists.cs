@@ -12,6 +12,7 @@ namespace Reproductor_de_Musica
 {
     public partial class VistaVerPlaylists : UserControl
     {
+        private Playlist1 playlistSeleccionada;
         public VistaVerPlaylists()
         {
             InitializeComponent();
@@ -19,6 +20,48 @@ namespace Reproductor_de_Musica
         }
 
         public event Action<Playlist1> PlaylistSeleccionada;
+
+        private void renombrarPlaylistToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (playlistSeleccionada == null)
+            {
+                MessageBox.Show("Selecciona una playlist");
+                return;
+            }
+
+            FormRenombrar frm = new FormRenombrar(playlistSeleccionada.nombre);
+
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                ConexionGlobal.Instancia.RenombrarPlaylist(playlistSeleccionada.Id, frm.NuevoNombre);
+
+                MessageBox.Show("Playlist renombrada con éxito", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+
+                this.Controls.Clear();
+                CargarYDibujarPlaylists();
+            }
+        }
+
+        private void eliminarPlaylistToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (playlistSeleccionada == null)
+            {
+                MessageBox.Show("Selecciona una playlist", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            DialogResult resp = MessageBox.Show("¿Está seguro de eliminar la Playlist?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (resp == DialogResult.No)
+                return;
+
+            ConexionGlobal.Instancia.EliminarPlaylist(playlistSeleccionada.Id);
+
+            MessageBox.Show("Playlist eliminada", "Exito", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
+
+            this.Controls.Clear();
+            CargarYDibujarPlaylists();
+        }
 
         private void CargarYDibujarPlaylists()
         {
@@ -59,14 +102,25 @@ namespace Reproductor_de_Musica
                     btnRectangulo.Font = new Font("Segoe UI", 10, FontStyle.Bold);
                     btnRectangulo.FlatStyle = FlatStyle.Flat;
                     btnRectangulo.FlatAppearance.BorderSize = 0;
+                    btnRectangulo.ContextMenuStrip = ContextMenuPlaylist; // Asignamos el menú contextual al botón
 
 
                     btnRectangulo.Click += (playlistBtn, eBtn) =>
                     {
-                        Playlist1 seleccionada =
-                            (Playlist1)((Button)playlistBtn).Tag;
+                        Playlist1 seleccionada = (Playlist1)((Button)playlistBtn).Tag;
 
                         PlaylistSeleccionada?.Invoke(seleccionada);
+                    };
+
+                    //Evento para detectar el click derecho y asignar la playlist seleccionada
+                    btnRectangulo.MouseDown += (playlistBtn, eBtn) =>
+                    {
+                        if (eBtn.Button == MouseButtons.Right)
+                        {
+                            playlistSeleccionada = (Playlist1)((Button)playlistBtn).Tag;
+
+                            ContextMenuPlaylist.Show(btnRectangulo, eBtn.Location);
+                        }
                     };
 
                     // Añadimos el botón al formulario activo
