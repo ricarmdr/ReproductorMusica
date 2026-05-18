@@ -140,6 +140,19 @@ namespace Reproductor_de_Musica
             {
                 ReproducirCancion(actual.Anterior.Dato);
             }
+            // Si estamos al inicio y el modo bucle está activado
+            else if (ModoBucle)  
+            {
+                NodoCancion temp = playlist.inicio;
+
+                //vamos al final
+                while (temp.Siguiente != null)
+                {
+                    temp = temp.Siguiente;
+                }
+
+                ReproducirCancion(temp.Dato);
+            }
         }
 
 
