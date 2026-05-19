@@ -430,6 +430,7 @@ namespace Reproductor_de_Musica
             this.btnCola.Size = new System.Drawing.Size(20, 30);
             this.btnCola.TabIndex = 16;
             this.btnCola.Text = "⇆";
+            this.toolTip1.SetToolTip(this.btnCola, "Ver Cola Reproducción");
             this.btnCola.UseVisualStyleBackColor = true;
             this.btnCola.Click += new System.EventHandler(this.btnCola_Click);
             // 
