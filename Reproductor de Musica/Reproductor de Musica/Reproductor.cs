@@ -19,6 +19,9 @@ namespace Reproductor_de_Musica
         private WaveOutEvent output;
         private AudioFileReader audio;
 
+        // Cola de reproducción para manejar las canciones que se van a reproducir después de la actual
+        private ColaReproduccion cola = new ColaReproduccion();
+
         //Expone la posicion actual de la cancion (tiempo en el que esta)
         public TimeSpan Posicion => audio != null ? audio.CurrentTime : TimeSpan.Zero;
 
@@ -107,6 +110,16 @@ namespace Reproductor_de_Musica
             }
         }
 
+        // Agregar canción a la cola
+        public void AgregarACola(Cancion c)
+        {
+            cola.Encolar(c);
+        }
+
+        public ColaReproduccion ObtenerCola()
+        {
+            return cola;
+        }
 
         public void PausarCancion()
         {
@@ -123,6 +136,15 @@ namespace Reproductor_de_Musica
      
         public void SiguienteCancion()
         {
+            // Si hay canciones en la cola, esas tienen prioridad
+            if (!cola.EstaVacia())
+            {
+                Cancion siguiente = cola.Desencolar();
+                ReproducirCancion(siguiente);
+                return;
+            }
+
+            // Si no hay cola, navega la lista normal
             if (actual != null && actual.Siguiente != null)
             {
                 ReproducirCancion(actual.Siguiente.Dato);

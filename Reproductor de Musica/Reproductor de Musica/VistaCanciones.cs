@@ -13,7 +13,10 @@ namespace Reproductor_de_Musica
     public partial class VistaCanciones : UserControl
     {
         private Playlist1 playlistActual;
+
+        // Eventos para comunicar con el reproductor
         public event Action<Cancion> CancionSeleccionada;
+        public event Action<Cancion> CancionEncolada;
 
         public VistaCanciones(Playlist1 playlist)
         {
@@ -192,6 +195,20 @@ namespace Reproductor_de_Musica
                 MessageBox.Show("Canción agregada a playlist");
             }
         }
+        private void agregarAColaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Cancion c = ObtenerCancionSeleccionada();
+            if (c == null)
+            {
+                MessageBox.Show("Selecciona una canción");
+                return;
+            }
+
+            // Llamar al reproductor para encolar
+            CancionEncolada?.Invoke(c);
+
+            MessageBox.Show($"'{c.Nombre}' agregada a la cola");
+        }
 
         private void eliminarDePlaylistToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -216,5 +233,6 @@ namespace Reproductor_de_Musica
 
             MessageBox.Show("Canción eliminada de la playlist");
         }
+
     }
 }
