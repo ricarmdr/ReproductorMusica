@@ -68,5 +68,44 @@ namespace Reproductor_de_Musica
         {
             return frente == null;
         }
+
+        public bool EliminarDeCola(int idCancion)
+        {
+            if (frente == null) return false;
+
+            // Caso especial: es el primero
+            if (frente.Dato.Id == idCancion)
+            {
+                frente = frente.Siguiente;
+                if (frente == null)
+                    final = null;
+                Cantidad--;
+                return true;
+            }
+
+            // Recorre buscando el nodo anterior al que se quiere eliminar
+            NodoCola anterior = frente;
+            NodoCola actual = frente.Siguiente;
+
+            while (actual != null)
+            {
+                if (actual.Dato.Id == idCancion)
+                {
+                    anterior.Siguiente = actual.Siguiente;
+
+                    // Si era el último, actualizar final
+                    if (actual == final)
+                        final = anterior;
+
+                    Cantidad--;
+                    return true;
+                }
+
+                anterior = actual;
+                actual = actual.Siguiente;
+            }
+
+            return false; // No se encontró
+        }
     }
 }
