@@ -57,7 +57,7 @@ namespace Reproductor_de_Musica
 
             ConexionGlobal.Instancia.EliminarPlaylist(playlistSeleccionada.Id);
 
-            MessageBox.Show("Playlist eliminada", "Exito", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
+            MessageBox.Show("Playlist eliminada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 
             this.Controls.Clear();
             CargarYDibujarPlaylists();
