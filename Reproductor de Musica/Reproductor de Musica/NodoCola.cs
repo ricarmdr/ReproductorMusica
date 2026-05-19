@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Reproductor_de_Musica
+{
+    public class NodoCola
+    {
+        public Cancion Dato;
+        public NodoCola Siguiente;
+
+        public NodoCola(Cancion c)
+        {
+            Dato = c;
+            Siguiente = null;
+        }
+    }
+}

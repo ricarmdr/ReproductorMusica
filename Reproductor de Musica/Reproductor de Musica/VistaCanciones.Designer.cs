@@ -35,7 +35,9 @@
             this.dvgCanciones = new System.Windows.Forms.DataGridView();
             this.agregarAPlaylistToolStripMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.agregarAPlaylistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.agregarAColaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.eliminarDePlaylistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.EliminarCanciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dvgCanciones)).BeginInit();
             this.agregarAPlaylistToolStripMenu.SuspendLayout();
             this.SuspendLayout();
@@ -93,9 +95,11 @@
             // 
             this.agregarAPlaylistToolStripMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.agregarAPlaylistToolStripMenuItem,
-            this.eliminarDePlaylistToolStripMenuItem});
+            this.agregarAColaToolStripMenuItem,
+            this.eliminarDePlaylistToolStripMenuItem,
+            this.EliminarCanciónToolStripMenuItem});
             this.agregarAPlaylistToolStripMenu.Name = "agregarAPlaylistToolStripMenu";
-            this.agregarAPlaylistToolStripMenu.Size = new System.Drawing.Size(196, 48);
+            this.agregarAPlaylistToolStripMenu.Size = new System.Drawing.Size(196, 114);
             // 
             // agregarAPlaylistToolStripMenuItem
             // 
@@ -107,6 +111,16 @@
             this.agregarAPlaylistToolStripMenuItem.Text = "+ Agregar a Playlist";
             this.agregarAPlaylistToolStripMenuItem.Click += new System.EventHandler(this.agregarAPlaylistToolStripMenuItem_Click);
             // 
+            // agregarAColaToolStripMenuItem
+            // 
+            this.agregarAColaToolStripMenuItem.BackColor = System.Drawing.Color.Black;
+            this.agregarAColaToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.agregarAColaToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.agregarAColaToolStripMenuItem.Name = "agregarAColaToolStripMenuItem";
+            this.agregarAColaToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.agregarAColaToolStripMenuItem.Text = "+ Agregar a Cola";
+            this.agregarAColaToolStripMenuItem.Click += new System.EventHandler(this.agregarAColaToolStripMenuItem_Click);
+            // 
             // eliminarDePlaylistToolStripMenuItem
             // 
             this.eliminarDePlaylistToolStripMenuItem.BackColor = System.Drawing.Color.Black;
@@ -116,6 +130,16 @@
             this.eliminarDePlaylistToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
             this.eliminarDePlaylistToolStripMenuItem.Text = "X Eliminar de Playlist";
             this.eliminarDePlaylistToolStripMenuItem.Click += new System.EventHandler(this.eliminarDePlaylistToolStripMenuItem_Click);
+            // 
+            // EliminarCanciónToolStripMenuItem
+            // 
+            this.EliminarCanciónToolStripMenuItem.BackColor = System.Drawing.Color.Black;
+            this.EliminarCanciónToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EliminarCanciónToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(185)))), ((int)(((byte)(84)))));
+            this.EliminarCanciónToolStripMenuItem.Name = "EliminarCanciónToolStripMenuItem";
+            this.EliminarCanciónToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.EliminarCanciónToolStripMenuItem.Text = "X Eliminar Canción";
+            this.EliminarCanciónToolStripMenuItem.Click += new System.EventHandler(this.EliminarCanciónToolStripMenuItem_Click);
             // 
             // VistaCanciones
             // 
@@ -137,5 +161,7 @@
         private System.Windows.Forms.ContextMenuStrip agregarAPlaylistToolStripMenu;
         private System.Windows.Forms.ToolStripMenuItem agregarAPlaylistToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem eliminarDePlaylistToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem agregarAColaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem EliminarCanciónToolStripMenuItem;
     }
 }

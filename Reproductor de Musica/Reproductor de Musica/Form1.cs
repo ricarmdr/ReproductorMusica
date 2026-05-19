@@ -89,8 +89,6 @@ namespace Reproductor_de_Musica
 
             lblTitulo.Text = "Biblioteca"; // Titulo inicial del panel de contenido
 
-            // Configuracion del boton de bucle (color gris: desactivado)
-            btnBucle.ForeColor = Color.FromArgb(70, 70, 70);
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
@@ -354,6 +352,7 @@ namespace Reproductor_de_Musica
             //Se enlazan los eventos para que al seleccionar una cancion se reproduzca y para que al cambiar la canción desde el reproductor se seleccione en la vista
             vistaCanciones.CancionSeleccionada += ReproducirDesdeVista;
             reproductor.OnCancionCambiada += vistaCanciones.SeleccionarEnGrid;
+            vistaCanciones.CancionEncolada += (c) => reproductor.AgregarACola(c);
 
             //Se actualiza el titulo del panelTitulo
             lblTitulo.Text = titulo;
@@ -418,8 +417,14 @@ namespace Reproductor_de_Musica
             }
             else
             {
-                btnBucle.ForeColor = Color.FromArgb(70, 70, 70);
+                btnBucle.ForeColor = Color.White;
             }
+        }
+
+        private void btnCola_Click(object sender, EventArgs e)
+        {
+            FormCola frmCola = new FormCola(reproductor.ObtenerCola());
+            frmCola.ShowDialog();
         }
     }
 }

@@ -90,7 +90,6 @@
             this.txtNombrePlaylist.Name = "txtNombrePlaylist";
             this.txtNombrePlaylist.Size = new System.Drawing.Size(222, 20);
             this.txtNombrePlaylist.TabIndex = 10;
-            this.txtNombrePlaylist.TextChanged += new System.EventHandler(this.txtNombrePlaylist_TextChanged);
             // 
             // FormCrearPlaylist
             // 

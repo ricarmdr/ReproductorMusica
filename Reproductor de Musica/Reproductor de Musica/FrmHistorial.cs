@@ -6,13 +6,6 @@ namespace Reproductor_de_Musica
 {
     public partial class FrmHistorial : Form
     {
-        // Constructor vacio
-        public FrmHistorial()
-        {
-            InitializeComponent();
-            ConfigurarGrid();
-        }
-
         // Constructor con historial
         public FrmHistorial(NodoCancion cima)
         {

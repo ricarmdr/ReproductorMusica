@@ -56,13 +56,14 @@ namespace Reproductor_de_Musica
             this.trkVolumen = new System.Windows.Forms.TrackBar();
             this.lblVolumen = new System.Windows.Forms.Label();
             this.panelRep = new System.Windows.Forms.Panel();
+            this.btnCola = new System.Windows.Forms.Button();
+            this.btnBucle = new System.Windows.Forms.Button();
             this.lblTiempoActual = new System.Windows.Forms.Label();
             this.trackBarProgreso = new System.Windows.Forms.TrackBar();
             this.btnAnterior = new System.Windows.Forms.Button();
             this.lblDuracion = new System.Windows.Forms.Label();
             this.btnSiguiente = new System.Windows.Forms.Button();
             this.btnPlayPause = new System.Windows.Forms.Button();
-            this.btnBucle = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.panel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -402,6 +403,7 @@ namespace Reproductor_de_Musica
             // 
             this.panelRep.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panelRep.BackColor = System.Drawing.Color.Transparent;
+            this.panelRep.Controls.Add(this.btnCola);
             this.panelRep.Controls.Add(this.btnBucle);
             this.panelRep.Controls.Add(this.lblTiempoActual);
             this.panelRep.Controls.Add(this.trackBarProgreso);
@@ -413,6 +415,42 @@ namespace Reproductor_de_Musica
             this.panelRep.Name = "panelRep";
             this.panelRep.Size = new System.Drawing.Size(477, 100);
             this.panelRep.TabIndex = 17;
+            // 
+            // btnCola
+            // 
+            this.btnCola.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCola.FlatAppearance.BorderSize = 0;
+            this.btnCola.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnCola.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnCola.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCola.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCola.ForeColor = System.Drawing.Color.White;
+            this.btnCola.Location = new System.Drawing.Point(139, 10);
+            this.btnCola.Name = "btnCola";
+            this.btnCola.Size = new System.Drawing.Size(20, 30);
+            this.btnCola.TabIndex = 16;
+            this.btnCola.Text = "⇆";
+            this.toolTip1.SetToolTip(this.btnCola, "Ver Cola Reproducción");
+            this.btnCola.UseVisualStyleBackColor = true;
+            this.btnCola.Click += new System.EventHandler(this.btnCola_Click);
+            // 
+            // btnBucle
+            // 
+            this.btnBucle.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnBucle.FlatAppearance.BorderSize = 0;
+            this.btnBucle.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnBucle.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnBucle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBucle.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBucle.ForeColor = System.Drawing.Color.White;
+            this.btnBucle.Location = new System.Drawing.Point(323, 10);
+            this.btnBucle.Name = "btnBucle";
+            this.btnBucle.Size = new System.Drawing.Size(19, 30);
+            this.btnBucle.TabIndex = 15;
+            this.btnBucle.Text = "↻";
+            this.toolTip1.SetToolTip(this.btnBucle, "Activar Repetir");
+            this.btnBucle.UseVisualStyleBackColor = true;
+            this.btnBucle.Click += new System.EventHandler(this.btnBucle_Click);
             // 
             // lblTiempoActual
             // 
@@ -511,24 +549,6 @@ namespace Reproductor_de_Musica
             this.btnPlayPause.UseVisualStyleBackColor = false;
             this.btnPlayPause.Click += new System.EventHandler(this.btnPlayPause_Click);
             // 
-            // btnBucle
-            // 
-            this.btnBucle.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnBucle.FlatAppearance.BorderSize = 0;
-            this.btnBucle.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.btnBucle.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.btnBucle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBucle.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBucle.ForeColor = System.Drawing.Color.White;
-            this.btnBucle.Location = new System.Drawing.Point(323, 10);
-            this.btnBucle.Name = "btnBucle";
-            this.btnBucle.Size = new System.Drawing.Size(19, 30);
-            this.btnBucle.TabIndex = 15;
-            this.btnBucle.Text = "↻";
-            this.toolTip1.SetToolTip(this.btnBucle, "Activar Repetir");
-            this.btnBucle.UseVisualStyleBackColor = true;
-            this.btnBucle.Click += new System.EventHandler(this.btnBucle_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -602,6 +622,7 @@ namespace Reproductor_de_Musica
         private Panel panelContenido;
         private Button btnBucle;
         private ToolTip toolTip1;
+        private Button btnCola;
     }
 }
 
