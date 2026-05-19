@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,12 @@ namespace Reproductor_de_Musica
             }
 
             this.playlistActual = playlist;
+
+            //PARA QUE NO APAREZCA ELIMINAR CANCION EN LA PLAYLIST
+            if (playlistActual.Id != 0)
+            {
+                EliminarCanciónToolStripMenuItem.Visible = false;
+            }
 
             ConfigurarColumnasDGV();
             CargarDataGrid();
@@ -234,5 +241,46 @@ namespace Reproductor_de_Musica
             MessageBox.Show("Canción eliminada de la playlist");
         }
 
+        private void EliminarCanciónToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Cancion c = ObtenerCancionSeleccionada();
+
+            if (c == null)
+            {
+                MessageBox.Show("Selecciona una canción");
+                return;
+            }
+
+            DialogResult resp = MessageBox.Show("¿Eliminar canción completamente?",
+                "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (resp == DialogResult.No)
+                return;
+
+            try
+            {
+                // Eliminar de SQL
+                ConexionGlobal.Instancia.EliminarCancionCompleta(c.Id);
+
+                // Eliminar de memoria
+                playlistActual.EliminarCancion(c.Id);
+
+                // Eliminar archivo físico
+                string rutaCompleta = Path.Combine(Application.StartupPath, c.RutaArchivo);
+
+                if (File.Exists(rutaCompleta))
+                {
+                    File.Delete(rutaCompleta);
+                }
+
+                // Refrescar grid
+                CargarDataGrid();
+                MessageBox.Show("Canción eliminada");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al eliminar: " + ex.Message);
+            }
+        }
     }
 }

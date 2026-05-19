@@ -279,5 +279,46 @@ namespace Reproductor_de_Musica
             }
         }
 
+        //Metodo para eliminar una cancion completamente de la base de datos, incluyendo las relaciones con las playlists
+        public void EliminarCancionCompleta(int idCancion)
+        {
+            using (SqlConnection conn = new SqlConnection(cadenaConexion))
+            {
+                conn.Open();
+
+                SqlTransaction trans = conn.BeginTransaction();
+
+                try
+                {
+                    // 1. Eliminar relaciones
+                    string queryRelacion = @"
+                        DELETE FROM PlaylistCancion
+                        WHERE idCancion = @id";
+
+                    SqlCommand cmdRelacion = new SqlCommand(queryRelacion, conn, trans);
+                    cmdRelacion.Parameters.AddWithValue("@id", idCancion);
+                    cmdRelacion.ExecuteNonQuery();
+
+                    // 2. Eliminar canción
+                    string queryCancion = @"
+                        DELETE FROM Cancion
+                        WHERE idCancion = @id";
+
+                    SqlCommand cmdCancion = new SqlCommand(queryCancion, conn, trans);
+                    cmdCancion.Parameters.AddWithValue(
+                    "@id", idCancion);
+                    cmdCancion.ExecuteNonQuery();
+                    trans.Commit();
+                }
+                catch
+                {
+                    //trans por si ocurre algun error en la consulta
+                    trans.Rollback();
+                    throw;
+                }
+            }
+        }
+
+
     }
 }
